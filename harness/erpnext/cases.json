@@ -1,0 +1,13 @@
+{
+  "about": "What each side prints, through Frappe's own PDF routes (download_pdf for one document, download_multi_pdf for several), with the Standard print format and the default letterhead. The documents come from seed.py.",
+  "cases": [
+    {"name": "sales-invoice-1-page", "doctype": "Sales Invoice", "names": ["WKT-SINV-1"]},
+    {"name": "sales-invoice-long", "doctype": "Sales Invoice", "names": ["WKT-SINV-2"]},
+    {"name": "sales-invoices-3-at-once", "doctype": "Sales Invoice", "names": ["WKT-SINV-1", "WKT-SINV-3", "WKT-SINV-4"]},
+    {"name": "quotation", "doctype": "Quotation", "names": ["WKT-QTN-1"]},
+    {"name": "sales-order", "doctype": "Sales Order", "names": ["WKT-SO-1"]},
+    {"name": "delivery-note", "doctype": "Delivery Note", "names": ["WKT-DN-1"]},
+    {"name": "purchase-order", "doctype": "Purchase Order", "names": ["WKT-PO-1"]},
+    {"name": "sales-invoice-missing-image", "doctype": "Sales Invoice", "names": ["WKT-SINV-5"]}
+  ]
+}

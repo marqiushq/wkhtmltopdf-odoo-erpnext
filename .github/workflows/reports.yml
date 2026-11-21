@@ -1,0 +1,265 @@
+# Prints Odoo's and ERPNext's standard reports through their own Print routes with wkhtmltopdf 0.12.6
+# (the reference) and marqius-wkhtmltopdf, on GitHub's own machines; compares every PDF with the
+# reference's, page by page, with marqius-wkhtmltopdf compare; and files the results under results/
+# with a link back to the run, so anyone can read the log behind every number.
+#
+#   at a release   marqius-wkhtmltopdf's release workflow sends a repository_dispatch, type
+#                  marqius-wkhtmltopdf-release, client_payload {"version": "X.Y.Z"}: that version on
+#                  every supported version of each application
+#   every day      when the latest marqius-wkhtmltopdf has no filed results yet (a release the
+#                  dispatch missed), and on Mondays in any case: the latest marqius-wkhtmltopdf against
+#                  the latest Odoo and ERPNext images, so a change in either shows within a week (only
+#                  while the repository is public). The scheduled run starts that run by hand
+#                  (workflow_dispatch) rather than testing itself: a scheduled event does not say
+#                  whether the repository is public, and the results' attestation is signed according
+#                  to that
+#   a candidate    by hand, with candidate_run: a build of marqius-wkhtmltopdf's release workflow in
+#                  place of the release. Its results are shown in the run and never filed
+#   by hand        Actions > Reports > Run workflow: the versions, applications and machines to test
+#
+# Each cell is one application version on one kind of machine. In it, one database is made with the
+# application's demo data and a fixed set of documents, then copied for each side, so every program
+# prints the same records. Only the report job can write to the repository.
+#
+# Provenance: each program is checked against its SHA-256 and, where its publisher makes one, its
+# GitHub attestation, before anything is tested; inside each cell the program each side runs is
+# checked again, byte for byte. The files a run files under results/ are attested by the report job
+# (GitHub makes attestations only for public repositories on this plan: while the repository is
+# private the step is skipped, and the run's page lists what it would have attested).
+name: Reports
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+    inputs:
+      marqius:
+        description: "marqius-wkhtmltopdf version (empty: the latest)"
+        required: false
+        default: ""
+      apps:
+        description: "Applications: odoo, erpnext, or both separated by a space (empty: both)"
+        required: false
+        default: ""
+      series:
+        description: "Their versions to test, separated by spaces, e.g. 19.0 (empty: every supported one)"
+        required: false
+        default: ""
+      archs:
+        description: "Machines: x86-64, arm64, or both separated by a space (empty: both)"
+        required: false
+        default: ""
+      programs:
+        description: "Programs: wkhtmltopdf marqius (empty: both; wkhtmltopdf is the reference)"
+        required: false
+        default: ""
+      candidate_run:
+        description: "A build to test in place of the release: the run of marqius-wkhtmltopdf's release workflow that built it (empty: the release)"
+        required: false
+        default: ""
+      candidate_sha256:
+        description: "With candidate_run: the SHA-256 that build recorded for its linux-x86_64 program"
+        required: false
+        default: ""
+      publish:
+        description: "File the results under results/ and update the README"
+        type: boolean
+        default: true
+  repository_dispatch:
+    types: [marqius-wkhtmltopdf-release]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: reports-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: write   # a weekly run starts the run by hand
+    outputs:
+      run: ${{ steps.plan.outputs.run }}
+      marqius: ${{ steps.plan.outputs.marqius }}
+      programs: ${{ steps.plan.outputs.programs }}
+      archs: ${{ steps.plan.outputs.archs }}
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - id: plan
+        name: Pick the versions and the cells
+        env:
+          EVENT: ${{ github.event_name }}
+          # by hand, the inputs; at a release, the dispatch's payload (plan.py checks every value)
+          INPUT_MARQIUS: ${{ inputs.marqius || github.event.client_payload.version }}
+          INPUT_APPS: ${{ inputs.apps || github.event.client_payload.apps }}
+          INPUT_SERIES: ${{ inputs.series || github.event.client_payload.series }}
+          INPUT_ARCHS: ${{ inputs.archs || github.event.client_payload.archs }}
+          INPUT_PROGRAMS: ${{ inputs.programs }}
+          GH_TOKEN: ${{ github.token }}
+        run: python3 harness/plan.py >> "$GITHUB_OUTPUT"
+      - name: Start the run by hand, for the versions picked
+        if: steps.plan.outputs.dispatch == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MARQIUS: ${{ steps.plan.outputs.marqius }}
+        run: gh workflow run reports.yml --repo "$GITHUB_REPOSITORY" --ref main -f marqius="$MARQIUS" -f publish=true
+
+  programs:
+    needs: plan
+    if: needs.plan.outputs.run == 'true'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Download the two programs and check their SHA-256 and attestations
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MARQIUS: ${{ needs.plan.outputs.marqius }}
+          ARCHS: ${{ join(fromJSON(needs.plan.outputs.archs), ' ') }}
+          CANDIDATE_RUN: ${{ inputs.candidate_run }}
+          CANDIDATE_SHA256: ${{ inputs.candidate_sha256 }}
+        run: |
+          bash harness/programs.sh "$MARQIUS" "$ARCHS" programs
+          mkdir -p programs-list && cp programs/programs.json programs-list/
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: programs
+          path: programs
+          retention-days: 3
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: programs-list
+          path: programs-list
+          retention-days: 90
+
+  cell:
+    needs: [plan, programs]
+    name: ${{ matrix.title }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: programs
+          path: programs
+      - name: Print the reports with each program, and compare
+        env:
+          PROGRAMS: ${{ needs.plan.outputs.programs }}
+          APP: ${{ matrix.app }}
+          SERIES: ${{ matrix.series }}
+          ARCH: ${{ matrix.arch }}
+        run: bash "$(jq -r --arg a "$APP" '.apps[$a].script' apps.json)" "$SERIES" "$ARCH" programs out
+      - name: Keep what the report needs, and the PDFs beside it
+        if: always()
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          mkdir -p cell
+          # what each side and compare left, without the PDFs, the pages compare draws and the calls' HTML
+          (cd out && find . -type f \( -name '*.json' -o -name '*.txt' -o -name '*.tsv' -o -name '*.csv' -o -name '*.log' \) \
+            ! -path '*/calls/*' ! -path '*/pairs/*' -print0 | tar --null -cf - -T - ) | tar -xf - -C cell
+          # the cell's result, with a link back to this run
+          if [ -f out/cell.json ]; then jq --arg u "$RUN_URL" '. + {run_url: $u}' out/cell.json > cell/cell.json; fi
+      - if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: cell-${{ matrix.app }}-${{ matrix.series }}-${{ matrix.arch }}
+          path: cell
+          retention-days: 90
+      - if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: pdfs-${{ matrix.app }}-${{ matrix.series }}-${{ matrix.arch }}
+          path: |
+            out/*/pdf
+            out/*/calls
+            out/compare-*
+          retention-days: 30
+      - name: The cell's verdict
+        run: python3 harness/publish.py --cell cell/cell.json
+
+  report:
+    needs: [plan, programs, cell]
+    if: always() && needs.programs.result == 'success'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      id-token: write       # to sign the attestation of the filed results
+      attestations: write   # to store it
+    concurrency:
+      group: report-${{ github.ref }}
+      cancel-in-progress: false
+    env:
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      PUBLISH: >-
+        ${{ github.ref == 'refs/heads/main' && !inputs.candidate_run && (github.event_name == 'repository_dispatch' ||
+        (github.event_name == 'workflow_dispatch' && inputs.publish)) }}
+    steps:
+      # main as it is now, not as it was when this run began: another run may have filed since
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: cell-*
+          path: artifacts
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: programs-list
+          path: programs-list
+      - name: The report
+        run: python3 harness/publish.py artifacts programs-list/programs.json --summary "$GITHUB_STEP_SUMMARY" --dry-run
+      # asked of the API, not read from the event: a scheduled run's event does not say
+      - name: Is this repository public?
+        id: repo
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          private=$(gh api "repos/$GITHUB_REPOSITORY" --jq .private)
+          case $private in true|false) echo "private=$private" >> "$GITHUB_OUTPUT" ;; *) echo "::error::cannot tell: $private"; exit 1 ;; esac
+      - name: File the results, write the README table and commit
+        id: file
+        if: env.PUBLISH == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # if main moves while this files (a push, another run), file again on top of it
+          for try in 1 2 3; do
+            rm -f "$RUNNER_TEMP/message.txt" "$RUNNER_TEMP/subjects.sha256"
+            python3 harness/publish.py artifacts programs-list/programs.json --message "$RUNNER_TEMP/message.txt" --subjects "$RUNNER_TEMP/subjects.sha256"
+            git add results README.md
+            if git diff --cached --quiet || [ ! -s "$RUNNER_TEMP/message.txt" ]; then echo "nothing new to file"; exit 0; fi
+            git commit -q -F "$RUNNER_TEMP/message.txt"
+            if git push -q origin HEAD:main; then echo "filed=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+            echo "main moved while filing; filing again on top of it"
+            git fetch -q origin main && git reset -q --hard origin/main
+          done
+          exit 1
+      # the files this run filed, attested as made by this workflow from this commit: anyone can check
+      # one with `gh attestation verify FILE -R OWNER/REPO`
+      - name: Attest the filed results
+        if: steps.file.outputs.filed == 'true' && steps.repo.outputs.private == 'false'
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-checksums: ${{ runner.temp }}/subjects.sha256
+      - name: Not attested while the repository is private
+        if: steps.file.outputs.filed == 'true' && steps.repo.outputs.private == 'true'
+        run: |
+          {
+            echo "### Not attested: this repository is private"
+            echo
+            echo "GitHub makes artifact attestations only for public repositories on this organisation's plan. Once the repository is public, this run's files would be attested by the step above. They are:"
+            echo
+            echo '```'
+            cat "$RUNNER_TEMP/subjects.sha256"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "::notice::Results filed, not attested: attestations need a public repository on this plan"
