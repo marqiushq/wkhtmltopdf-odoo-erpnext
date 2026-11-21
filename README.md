@@ -15,7 +15,34 @@ Calling wkhtmltopdf from your own code through a library such as pdfkit, wicked_
 **GO** means nothing worth looking at: every document printed, and `marqius-wkhtmltopdf compare` found no word, number, date, picture or page missing or changed. **REVIEW** means the content is the same and the layout differs in a way a person may want to look at. **NO-GO** means content changed or a document did not print. The time is how long the documents took through the application's Print route; in brackets, how many times faster than wkhtmltopdf.
 
 <!-- results:start -->
-The first results appear here after the first run.
+| Application | Machine | Program | System | Printed | compare against wkhtmltopdf 0.12.6 | Through the Print route | Run |
+|---|---|---|---|---|---|---|---|
+| ERPNext v15 | arm64 | wkhtmltopdf 0.12.6.1-3 | ERPNext's image (Debian 12) | 8 of 8 | reference | 11.61 s | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| ERPNext v15 | arm64 | marqius-wkhtmltopdf 0.12.13 | ERPNext's image (Debian 12) | 8 of 8 | GO: nothing blocking and nothing to look at | 4.87 s (2.4×) | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| ERPNext v15 | x86-64 | wkhtmltopdf 0.12.6.1-3 | ERPNext's image (Debian 12) | 8 of 8 | reference | 10.16 s | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| ERPNext v15 | x86-64 | marqius-wkhtmltopdf 0.12.13 | ERPNext's image (Debian 12) | 8 of 8 | GO: nothing blocking and nothing to look at | 3.68 s (2.8×) | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| ERPNext v16 | arm64 | wkhtmltopdf 0.12.6.1-3 | ERPNext's image (Debian 13) | 8 of 8 | reference | 11.64 s | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| ERPNext v16 | arm64 | marqius-wkhtmltopdf 0.12.13 | ERPNext's image (Debian 13) | 8 of 8 | REVIEW: nothing blocking; 1 document to look at | 4.43 s (2.6×) | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| ERPNext v16 | x86-64 | wkhtmltopdf 0.12.6.1-3 | ERPNext's image (Debian 13) | 8 of 8 | reference | 10.95 s | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| ERPNext v16 | x86-64 | marqius-wkhtmltopdf 0.12.13 | ERPNext's image (Debian 13) | 8 of 8 | REVIEW: nothing blocking; 1 document to look at | 4.36 s (2.5×) | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 18.0 | arm64 | wkhtmltopdf 0.12.6.1-3 | Odoo's image (Ubuntu 24.04) | 13 of 13 | reference | 50.86 s | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 18.0 | arm64 | marqius-wkhtmltopdf 0.12.13 | Odoo's image (Ubuntu 24.04) | 13 of 13 | GO: nothing blocking and nothing to look at | 4.97 s (10.2×) | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 18.0 | arm64 | marqius-wkhtmltopdf 0.12.13 | Debian 13 | 13 of 13 | GO: nothing blocking and nothing to look at | 4.78 s (10.6×) | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 18.0 | x86-64 | wkhtmltopdf 0.12.6.1-3 | Odoo's image (Ubuntu 24.04) | 13 of 13 | reference | 50.38 s | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 18.0 | x86-64 | marqius-wkhtmltopdf 0.12.13 | Odoo's image (Ubuntu 24.04) | 13 of 13 | GO: nothing blocking and nothing to look at | 4.66 s (10.8×) | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 18.0 | x86-64 | marqius-wkhtmltopdf 0.12.13 | Debian 13 | 13 of 13 | GO: nothing blocking and nothing to look at | 4.57 s (11.0×) | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 19.0 | arm64 | wkhtmltopdf 0.12.6.1-3 | Odoo's image (Ubuntu 24.04) | 13 of 13 | reference | 49.84 s | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 19.0 | arm64 | marqius-wkhtmltopdf 0.12.13 | Odoo's image (Ubuntu 24.04) | 13 of 13 | GO: nothing blocking and nothing to look at | 4.76 s (10.5×) | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 19.0 | arm64 | marqius-wkhtmltopdf 0.12.13 | Debian 13 | 13 of 13 | GO: nothing blocking and nothing to look at | 4.75 s (10.5×) | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 19.0 | x86-64 | wkhtmltopdf 0.12.6.1-3 | Odoo's image (Ubuntu 24.04) | 13 of 13 | reference | 48.64 s | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 19.0 | x86-64 | marqius-wkhtmltopdf 0.12.13 | Odoo's image (Ubuntu 24.04) | 13 of 13 | GO: nothing blocking and nothing to look at | 3.85 s (12.6×) | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 19.0 | x86-64 | marqius-wkhtmltopdf 0.12.13 | Debian 13 | 13 of 13 | GO: nothing blocking and nothing to look at | 3.74 s (13.0×) | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 20.0 | arm64 | wkhtmltopdf 0.12.6.1-3 | Odoo's image (Ubuntu 24.04) | 13 of 13 | reference | 54.29 s | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 20.0 | arm64 | marqius-wkhtmltopdf 0.12.13 | Odoo's image (Ubuntu 24.04) | 13 of 13 | REVIEW: nothing blocking; 3 documents to look at | 5.52 s (9.8×) | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 20.0 | arm64 | marqius-wkhtmltopdf 0.12.13 | Debian 13 | 13 of 13 | REVIEW: nothing blocking; 3 documents to look at | 5.49 s (9.9×) | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 20.0 | x86-64 | wkhtmltopdf 0.12.6.1-3 | Odoo's image (Ubuntu 24.04) | 13 of 13 | reference | 51.82 s | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 20.0 | x86-64 | marqius-wkhtmltopdf 0.12.13 | Odoo's image (Ubuntu 24.04) | 13 of 13 | REVIEW: nothing blocking; 3 documents to look at | 6.15 s (8.4×) | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
+| Odoo 20.0 | x86-64 | marqius-wkhtmltopdf 0.12.13 | Debian 13 | 13 of 13 | REVIEW: nothing blocking; 3 documents to look at | 6.26 s (8.3×) | [log](https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198) |
 <!-- results:end -->
 
 Each result's full report, with what the application said whenever a document did not print, is under [`results/`](results/).
