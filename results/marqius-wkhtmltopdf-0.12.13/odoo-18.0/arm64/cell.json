@@ -4,8 +4,8 @@
  "release": "18.0.20261112",
  "image": "odoo@sha256:0bd79cf07f59105c5697667c2241b86447e99c6adb036200df0e4e295785bdf3",
  "arch": "arm64",
- "started": "2026-11-21T17:51:17Z",
- "ended": "2026-11-21T17:56:06Z",
+ "started": "2026-11-23T07:42:31Z",
+ "ended": "2026-11-23T07:47:10Z",
  "reference": "ubuntu24-wkhtmltopdf",
  "programs": {
   "wkhtmltopdf": {
@@ -155,13 +155,13 @@
    "cases": 13,
    "printed": 13,
    "route_seconds": {
-    "total": 50.86,
-    "median": 4.26,
+    "total": 50.84,
+    "median": 4.27,
     "count": 13
    },
    "program_seconds": {
-    "total": 49.53,
-    "median": 4.183,
+    "total": 49.49,
+    "median": 4.178,
     "count": 13
    },
    "exit_statuses": {
@@ -172,12 +172,12 @@
     "invoice-1-page": {
      "printed": true,
      "status": 200,
-     "seconds": 5.3,
+     "seconds": 5.26,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 5.032,
+     "program_seconds": 5.002,
      "exit_statuses": [
       0
      ]
@@ -190,7 +190,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 4.256,
+     "program_seconds": 4.255,
      "exit_statuses": [
       0
      ]
@@ -198,12 +198,12 @@
     "invoices-3-at-once": {
      "printed": true,
      "status": 200,
-     "seconds": 4.5,
+     "seconds": 4.49,
      "pages": 5,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 4.334,
+     "program_seconds": 4.324,
      "exit_statuses": [
       0
      ]
@@ -211,12 +211,12 @@
     "invoices-2-companies": {
      "printed": true,
      "status": 200,
-     "seconds": 4.25,
+     "seconds": 4.24,
      "pages": 2,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 4.183,
+     "program_seconds": 4.178,
      "exit_statuses": [
       0
      ]
@@ -229,7 +229,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 4.12,
+     "program_seconds": 4.119,
      "exit_statuses": [
       0
      ]
@@ -242,7 +242,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 4.258,
+     "program_seconds": 4.253,
      "exit_statuses": [
       0
      ]
@@ -263,12 +263,12 @@
     "delivery-slip": {
      "printed": true,
      "status": 200,
-     "seconds": 4.22,
+     "seconds": 4.23,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 4.124,
+     "program_seconds": 4.127,
      "exit_statuses": [
       0
      ]
@@ -276,12 +276,12 @@
     "delivery-slips-3-at-once": {
      "printed": true,
      "status": 200,
-     "seconds": 4.32,
+     "seconds": 4.33,
      "pages": 3,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 4.246,
+     "program_seconds": 4.253,
      "exit_statuses": [
       0
      ]
@@ -289,12 +289,12 @@
     "picking-operations": {
      "printed": true,
      "status": 200,
-     "seconds": 4.26,
+     "seconds": 4.27,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 4.128,
+     "program_seconds": 4.129,
      "exit_statuses": [
       0
      ]
@@ -302,12 +302,12 @@
     "invoice-missing-image": {
      "printed": true,
      "status": 200,
-     "seconds": 2.31,
+     "seconds": 2.32,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 2.262,
+     "program_seconds": 2.264,
      "exit_statuses": [
       1
      ]
@@ -320,7 +320,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 2.203,
+     "program_seconds": 2.202,
      "exit_statuses": [
       1
      ]
@@ -333,7 +333,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 2.142,
+     "program_seconds": 2.139,
      "exit_statuses": [
       0
      ]
@@ -355,12 +355,12 @@
    "cases": 13,
    "printed": 13,
    "route_seconds": {
-    "total": 4.97,
+    "total": 4.95,
     "median": 0.28,
     "count": 13
    },
    "program_seconds": {
-    "total": 3.63,
+    "total": 3.61,
     "median": 0.216,
     "count": 13
    },
@@ -372,12 +372,12 @@
     "invoice-1-page": {
      "printed": true,
      "status": 200,
-     "seconds": 1.31,
+     "seconds": 1.3,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 1.047,
+     "program_seconds": 1.038,
      "exit_statuses": [
       0
      ]
@@ -390,7 +390,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.187,
+     "program_seconds": 0.185,
      "exit_statuses": [
       0
      ]
@@ -398,12 +398,12 @@
     "invoices-3-at-once": {
      "printed": true,
      "status": 200,
-     "seconds": 0.6,
+     "seconds": 0.58,
      "pages": 5,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.419,
+     "program_seconds": 0.412,
      "exit_statuses": [
       0
      ]
@@ -429,7 +429,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.11,
+     "program_seconds": 0.108,
      "exit_statuses": [
       0
      ]
@@ -455,7 +455,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.324,
+     "program_seconds": 0.32,
      "exit_statuses": [
       0
      ]
@@ -468,7 +468,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.112,
+     "program_seconds": 0.111,
      "exit_statuses": [
       0
      ]
@@ -481,7 +481,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.32,
+     "program_seconds": 0.324,
      "exit_statuses": [
       0
      ]
@@ -502,12 +502,12 @@
     "invoice-missing-image": {
      "printed": true,
      "status": 200,
-     "seconds": 0.29,
+     "seconds": 0.3,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.243,
+     "program_seconds": 0.246,
      "exit_statuses": [
       1
      ]
@@ -520,7 +520,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.236,
+     "program_seconds": 0.233,
      "exit_statuses": [
       1
      ]
@@ -533,7 +533,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.117,
+     "program_seconds": 0.12,
      "exit_statuses": [
       0
      ]
@@ -555,13 +555,13 @@
    "cases": 13,
    "printed": 13,
    "route_seconds": {
-    "total": 4.78,
+    "total": 4.8,
     "median": 0.28,
     "count": 13
    },
    "program_seconds": {
-    "total": 3.53,
-    "median": 0.217,
+    "total": 3.51,
+    "median": 0.214,
     "count": 13
    },
    "exit_statuses": {
@@ -572,12 +572,12 @@
     "invoice-1-page": {
      "printed": true,
      "status": 200,
-     "seconds": 1.2,
+     "seconds": 1.21,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.936,
+     "program_seconds": 0.941,
      "exit_statuses": [
       0
      ]
@@ -585,12 +585,12 @@
     "invoice-3-pages": {
      "printed": true,
      "status": 200,
-     "seconds": 0.28,
+     "seconds": 0.27,
      "pages": 4,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.198,
+     "program_seconds": 0.186,
      "exit_statuses": [
       0
      ]
@@ -598,12 +598,12 @@
     "invoices-3-at-once": {
      "printed": true,
      "status": 200,
-     "seconds": 0.53,
+     "seconds": 0.52,
      "pages": 5,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.438,
+     "program_seconds": 0.419,
      "exit_statuses": [
       0
      ]
@@ -616,7 +616,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.217,
+     "program_seconds": 0.214,
      "exit_statuses": [
       0
      ]
@@ -629,7 +629,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.11,
+     "program_seconds": 0.108,
      "exit_statuses": [
       0
      ]
@@ -655,7 +655,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.318,
+     "program_seconds": 0.32,
      "exit_statuses": [
       0
      ]
@@ -663,12 +663,12 @@
     "delivery-slip": {
      "printed": true,
      "status": 200,
-     "seconds": 0.21,
+     "seconds": 0.22,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.109,
+     "program_seconds": 0.11,
      "exit_statuses": [
       0
      ]
@@ -681,7 +681,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.323,
+     "program_seconds": 0.325,
      "exit_statuses": [
       0
      ]
@@ -694,7 +694,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.109,
+     "program_seconds": 0.11,
      "exit_statuses": [
       0
      ]
@@ -707,7 +707,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.244,
+     "program_seconds": 0.243,
      "exit_statuses": [
       1
      ]
@@ -715,12 +715,12 @@
     "invoices-missing-image-2-at-once": {
      "printed": true,
      "status": 200,
-     "seconds": 0.29,
+     "seconds": 0.3,
      "pages": 2,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.229,
+     "program_seconds": 0.23,
      "exit_statuses": [
       1
      ]
@@ -728,12 +728,12 @@
     "invoice-missing-png-only": {
      "printed": true,
      "status": 200,
-     "seconds": 0.16,
+     "seconds": 0.17,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.116,
+     "program_seconds": 0.117,
      "exit_statuses": [
       0
      ]
@@ -1139,5 +1139,5 @@
    }
   }
  },
- "run_url": "https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198"
+ "run_url": "https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/45132937753"
 }

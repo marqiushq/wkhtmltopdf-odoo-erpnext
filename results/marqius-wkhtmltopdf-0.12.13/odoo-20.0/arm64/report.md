@@ -1,12 +1,12 @@
 ### Odoo 20.0 (20.0.20261112), arm64
 
-Image `odoo@sha256:c7352c766b245b3c0e5c7b7a57e7660dde3265872be9566870d44bdb974f44cf`. Run: https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198.
+Image `odoo@sha256:c7352c766b245b3c0e5c7b7a57e7660dde3265872be9566870d44bdb974f44cf`. Run: https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/45132937753.
 
 | Program | System | Printed | compare against wkhtmltopdf 0.12.6 | Through the Print route | Keeps up |
 |---|---|---|---|---|---|
-| wkhtmltopdf 0.12.6.1-3 | Odoo's image (Ubuntu 24.04) | 13 of 13 | reference | 54.29 s | reference |
-| marqius-wkhtmltopdf 0.12.13 | Odoo's image (Ubuntu 24.04) | 13 of 13 | REVIEW: nothing blocking; 3 documents to look at | 5.52 s (9.8× the reference) | yes |
-| marqius-wkhtmltopdf 0.12.13 | Debian 13 | 13 of 13 | REVIEW: nothing blocking; 3 documents to look at | 5.49 s (9.9× the reference) | yes |
+| wkhtmltopdf 0.12.6.1-3 | Odoo's image (Ubuntu 24.04) | 13 of 13 | reference | 51.49 s | reference |
+| marqius-wkhtmltopdf 0.12.13 | Odoo's image (Ubuntu 24.04) | 13 of 13 | REVIEW: nothing blocking; 3 documents to look at | 5.7 s (9.0× the reference) | yes |
+| marqius-wkhtmltopdf 0.12.13 | Debian 13 | 13 of 13 | REVIEW: nothing blocking; 3 documents to look at | 5.78 s (8.9× the reference) | yes |
 
 **What compare found, document by document:**
 

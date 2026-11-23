@@ -1,11 +1,11 @@
 {
  "app": "erpnext",
  "series": "v15",
- "release": "ERPNext 15.125.0 with Frappe 15.127.1",
- "image": "frappe/erpnext@sha256:5ec74e520071583e8108c39ed7004d223881742f83c1a7fc9b9e6bcce08c6117",
+ "release": "ERPNext 15.126.0 with Frappe 15.127.1",
+ "image": "frappe/erpnext@sha256:ed58a17690a90dc68b07630f98f60800e1fe0f4aec7a65efc4f83f9fd462f6cf",
  "arch": "x86-64",
- "started": "2026-11-21T17:51:23Z",
- "ended": "2026-11-21T17:53:48Z",
+ "started": "2026-11-23T07:42:39Z",
+ "ended": "2026-11-23T07:45:07Z",
  "reference": "bookworm-wkhtmltopdf",
  "programs": {
   "wkhtmltopdf": {
@@ -88,7 +88,7 @@
  "setup_notes": [
   {
    "frappe": "15.127.1",
-   "erpnext": "15.125.0",
+   "erpnext": "15.126.0",
    "pdf_generator": "wkhtmltopdf (the only one)",
    "letter_head": "WKT Letter Head"
   }
@@ -107,13 +107,13 @@
    "cases": 8,
    "printed": 8,
    "route_seconds": {
-    "total": 10.16,
-    "median": 0.975,
+    "total": 10.21,
+    "median": 0.98,
     "count": 8
    },
    "program_seconds": {
     "total": 7.62,
-    "median": 0.76,
+    "median": 0.761,
     "count": 8
    },
    "exit_statuses": {
@@ -123,7 +123,7 @@
     "sales-invoice-1-page": {
      "printed": true,
      "status": 200,
-     "seconds": 1.85,
+     "seconds": 1.94,
      "pages": 1,
      "error": null,
      "error_name": null,
@@ -136,7 +136,7 @@
     "sales-invoice-long": {
      "printed": true,
      "status": 200,
-     "seconds": 1.17,
+     "seconds": 1.13,
      "pages": 4,
      "error": null,
      "error_name": null,
@@ -149,12 +149,12 @@
     "sales-invoices-3-at-once": {
      "printed": true,
      "status": 200,
-     "seconds": 2.41,
+     "seconds": 2.4,
      "pages": 3,
      "error": null,
      "error_name": null,
      "calls": 3,
-     "program_seconds": 2.098,
+     "program_seconds": 2.095,
      "exit_statuses": [
       0
      ]
@@ -162,12 +162,12 @@
     "quotation": {
      "printed": true,
      "status": 200,
-     "seconds": 0.92,
+     "seconds": 0.91,
      "pages": 2,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.721,
+     "program_seconds": 0.722,
      "exit_statuses": [
       0
      ]
@@ -180,7 +180,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.723,
+     "program_seconds": 0.725,
      "exit_statuses": [
       0
      ]
@@ -193,7 +193,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.723,
+     "program_seconds": 0.724,
      "exit_statuses": [
       0
      ]
@@ -201,12 +201,12 @@
     "purchase-order": {
      "printed": true,
      "status": 200,
-     "seconds": 0.95,
+     "seconds": 0.96,
      "pages": 2,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.723,
+     "program_seconds": 0.722,
      "exit_statuses": [
       0
      ]
@@ -214,12 +214,12 @@
     "sales-invoice-missing-image": {
      "printed": true,
      "status": 200,
-     "seconds": 0.98,
+     "seconds": 0.99,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.817,
+     "program_seconds": 0.823,
      "exit_statuses": [
       0
      ]
@@ -239,13 +239,13 @@
    "cases": 8,
    "printed": 8,
    "route_seconds": {
-    "total": 3.68,
-    "median": 0.36,
+    "total": 3.72,
+    "median": 0.375,
     "count": 8
    },
    "program_seconds": {
-    "total": 1.15,
-    "median": 0.107,
+    "total": 1.17,
+    "median": 0.11,
     "count": 8
    },
    "exit_statuses": {
@@ -255,12 +255,12 @@
     "sales-invoice-1-page": {
      "printed": true,
      "status": 200,
-     "seconds": 0.97,
+     "seconds": 0.95,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.1,
+     "program_seconds": 0.102,
      "exit_statuses": [
       0
      ]
@@ -273,7 +273,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.142,
+     "program_seconds": 0.143,
      "exit_statuses": [
       0
      ]
@@ -281,12 +281,12 @@
     "sales-invoices-3-at-once": {
      "printed": true,
      "status": 200,
-     "seconds": 0.57,
+     "seconds": 0.58,
      "pages": 3,
      "error": null,
      "error_name": null,
      "calls": 3,
-     "program_seconds": 0.271,
+     "program_seconds": 0.278,
      "exit_statuses": [
       0
      ]
@@ -294,12 +294,12 @@
     "quotation": {
      "printed": true,
      "status": 200,
-     "seconds": 0.29,
+     "seconds": 0.3,
      "pages": 2,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.107,
+     "program_seconds": 0.109,
      "exit_statuses": [
       0
      ]
@@ -307,12 +307,12 @@
     "sales-order": {
      "printed": true,
      "status": 200,
-     "seconds": 0.33,
+     "seconds": 0.34,
      "pages": 2,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.107,
+     "program_seconds": 0.108,
      "exit_statuses": [
       0
      ]
@@ -325,7 +325,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.106,
+     "program_seconds": 0.11,
      "exit_statuses": [
       0
      ]
@@ -333,12 +333,12 @@
     "purchase-order": {
      "printed": true,
      "status": 200,
-     "seconds": 0.35,
+     "seconds": 0.36,
      "pages": 2,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.108,
+     "program_seconds": 0.11,
      "exit_statuses": [
       0
      ]
@@ -346,12 +346,12 @@
     "sales-invoice-missing-image": {
      "printed": true,
      "status": 200,
-     "seconds": 0.37,
+     "seconds": 0.39,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.208,
+     "program_seconds": 0.211,
      "exit_statuses": [
       0
      ]
@@ -498,5 +498,5 @@
    }
   }
  },
- "run_url": "https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198"
+ "run_url": "https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/45132937753"
 }

@@ -4,8 +4,8 @@
  "release": "ERPNext 16.60.0 with Frappe 16.60.2",
  "image": "frappe/erpnext@sha256:3847babae025dae001e638b7fc5503c944fd968216b3074e60edfcc240fb2db6",
  "arch": "x86-64",
- "started": "2026-11-21T17:51:15Z",
- "ended": "2026-11-21T17:55:19Z",
+ "started": "2026-11-23T07:42:38Z",
+ "ended": "2026-11-23T07:45:30Z",
  "reference": "trixie-wkhtmltopdf",
  "programs": {
   "wkhtmltopdf": {
@@ -107,13 +107,13 @@
    "cases": 8,
    "printed": 8,
    "route_seconds": {
-    "total": 10.95,
-    "median": 0.94,
+    "total": 10.64,
+    "median": 0.92,
     "count": 8
    },
    "program_seconds": {
-    "total": 7.87,
-    "median": 0.767,
+    "total": 7.78,
+    "median": 0.755,
     "count": 8
    },
    "exit_statuses": {
@@ -123,12 +123,12 @@
     "sales-invoice-1-page": {
      "printed": true,
      "status": 200,
-     "seconds": 2.59,
+     "seconds": 2.54,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 1.041,
+     "program_seconds": 1.031,
      "exit_statuses": [
       0
      ]
@@ -136,12 +136,12 @@
     "sales-invoice-long": {
      "printed": true,
      "status": 200,
-     "seconds": 1.44,
+     "seconds": 1.3,
      "pages": 4,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.838,
+     "program_seconds": 0.829,
      "exit_statuses": [
       0
      ]
@@ -149,12 +149,12 @@
     "sales-invoices-3-at-once": {
      "printed": true,
      "status": 200,
-     "seconds": 2.44,
+     "seconds": 2.4,
      "pages": 3,
      "error": null,
      "error_name": null,
      "calls": 3,
-     "program_seconds": 2.185,
+     "program_seconds": 2.167,
      "exit_statuses": [
       0
      ]
@@ -162,12 +162,12 @@
     "quotation": {
      "printed": true,
      "status": 200,
-     "seconds": 0.87,
+     "seconds": 0.86,
      "pages": 2,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.758,
+     "program_seconds": 0.747,
      "exit_statuses": [
       0
      ]
@@ -175,12 +175,12 @@
     "sales-order": {
      "printed": true,
      "status": 200,
-     "seconds": 0.96,
+     "seconds": 0.93,
      "pages": 2,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.76,
+     "program_seconds": 0.75,
      "exit_statuses": [
       0
      ]
@@ -188,12 +188,12 @@
     "delivery-note": {
      "printed": true,
      "status": 200,
-     "seconds": 0.87,
+     "seconds": 0.85,
      "pages": 2,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.762,
+     "program_seconds": 0.748,
      "exit_statuses": [
       0
      ]
@@ -201,12 +201,12 @@
     "purchase-order": {
      "printed": true,
      "status": 200,
-     "seconds": 0.92,
+     "seconds": 0.91,
      "pages": 2,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.756,
+     "program_seconds": 0.75,
      "exit_statuses": [
       0
      ]
@@ -214,12 +214,12 @@
     "sales-invoice-missing-image": {
      "printed": true,
      "status": 200,
-     "seconds": 0.86,
+     "seconds": 0.85,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.772,
+     "program_seconds": 0.76,
      "exit_statuses": [
       0
      ]
@@ -239,13 +239,13 @@
    "cases": 8,
    "printed": 8,
    "route_seconds": {
-    "total": 4.36,
-    "median": 0.31,
+    "total": 4.04,
+    "median": 0.285,
     "count": 8
    },
    "program_seconds": {
-    "total": 1.3,
-    "median": 0.134,
+    "total": 1.24,
+    "median": 0.123,
     "count": 8
    },
    "exit_statuses": {
@@ -255,12 +255,12 @@
     "sales-invoice-1-page": {
      "printed": true,
      "status": 200,
-     "seconds": 1.76,
+     "seconds": 1.61,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.132,
+     "program_seconds": 0.112,
      "exit_statuses": [
       0
      ]
@@ -268,12 +268,12 @@
     "sales-invoice-long": {
      "printed": true,
      "status": 200,
-     "seconds": 0.69,
+     "seconds": 0.64,
      "pages": 4,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.168,
+     "program_seconds": 0.167,
      "exit_statuses": [
       0
      ]
@@ -281,12 +281,12 @@
     "sales-invoices-3-at-once": {
      "printed": true,
      "status": 200,
-     "seconds": 0.57,
+     "seconds": 0.53,
      "pages": 3,
      "error": null,
      "error_name": null,
      "calls": 3,
-     "program_seconds": 0.33,
+     "program_seconds": 0.318,
      "exit_statuses": [
       0
      ]
@@ -294,33 +294,7 @@
     "quotation": {
      "printed": true,
      "status": 200,
-     "seconds": 0.25,
-     "pages": 2,
-     "error": null,
-     "error_name": null,
-     "calls": 1,
-     "program_seconds": 0.136,
-     "exit_statuses": [
-      0
-     ]
-    },
-    "sales-order": {
-     "printed": true,
-     "status": 200,
-     "seconds": 0.32,
-     "pages": 2,
-     "error": null,
-     "error_name": null,
-     "calls": 1,
-     "program_seconds": 0.129,
-     "exit_statuses": [
-      0
-     ]
-    },
-    "delivery-note": {
-     "printed": true,
-     "status": 200,
-     "seconds": 0.23,
+     "seconds": 0.24,
      "pages": 2,
      "error": null,
      "error_name": null,
@@ -330,7 +304,7 @@
       0
      ]
     },
-    "purchase-order": {
+    "sales-order": {
      "printed": true,
      "status": 200,
      "seconds": 0.3,
@@ -338,7 +312,33 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.129,
+     "program_seconds": 0.123,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "delivery-note": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.22,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.122,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "purchase-order": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.27,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.123,
      "exit_statuses": [
       0
      ]
@@ -346,12 +346,12 @@
     "sales-invoice-missing-image": {
      "printed": true,
      "status": 200,
-     "seconds": 0.24,
+     "seconds": 0.23,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.148,
+     "program_seconds": 0.147,
      "exit_statuses": [
       0
      ]
@@ -495,5 +495,5 @@
    }
   }
  },
- "run_url": "https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198"
+ "run_url": "https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/45132937753"
 }

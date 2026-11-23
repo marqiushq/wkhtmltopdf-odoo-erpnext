@@ -1,11 +1,11 @@
 {
  "app": "erpnext",
  "series": "v15",
- "release": "ERPNext 15.125.0 with Frappe 15.127.1",
- "image": "frappe/erpnext@sha256:5ec74e520071583e8108c39ed7004d223881742f83c1a7fc9b9e6bcce08c6117",
+ "release": "ERPNext 15.126.0 with Frappe 15.127.1",
+ "image": "frappe/erpnext@sha256:ed58a17690a90dc68b07630f98f60800e1fe0f4aec7a65efc4f83f9fd462f6cf",
  "arch": "arm64",
- "started": "2026-11-21T17:51:19Z",
- "ended": "2026-11-21T17:54:51Z",
+ "started": "2026-11-23T07:42:35Z",
+ "ended": "2026-11-23T07:46:06Z",
  "reference": "bookworm-wkhtmltopdf",
  "programs": {
   "wkhtmltopdf": {
@@ -88,7 +88,7 @@
  "setup_notes": [
   {
    "frappe": "15.127.1",
-   "erpnext": "15.125.0",
+   "erpnext": "15.126.0",
    "pdf_generator": "wkhtmltopdf (the only one)",
    "letter_head": "WKT Letter Head"
   }
@@ -107,13 +107,13 @@
    "cases": 8,
    "printed": 8,
    "route_seconds": {
-    "total": 11.61,
-    "median": 1.14,
+    "total": 11.43,
+    "median": 1.135,
     "count": 8
    },
    "program_seconds": {
-    "total": 8.04,
-    "median": 0.815,
+    "total": 8.01,
+    "median": 0.811,
     "count": 8
    },
    "exit_statuses": {
@@ -123,12 +123,12 @@
     "sales-invoice-1-page": {
      "printed": true,
      "status": 200,
-     "seconds": 2.34,
+     "seconds": 2.21,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 1.044,
+     "program_seconds": 1.043,
      "exit_statuses": [
       0
      ]
@@ -136,12 +136,12 @@
     "sales-invoice-long": {
      "printed": true,
      "status": 200,
-     "seconds": 1.17,
+     "seconds": 1.15,
      "pages": 4,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.868,
+     "program_seconds": 0.861,
      "exit_statuses": [
       0
      ]
@@ -149,12 +149,12 @@
     "sales-invoices-3-at-once": {
      "printed": true,
      "status": 200,
-     "seconds": 2.64,
+     "seconds": 2.62,
      "pages": 3,
      "error": null,
      "error_name": null,
      "calls": 3,
-     "program_seconds": 2.196,
+     "program_seconds": 2.185,
      "exit_statuses": [
       0
      ]
@@ -162,12 +162,12 @@
     "quotation": {
      "printed": true,
      "status": 200,
-     "seconds": 1.15,
+     "seconds": 1.18,
      "pages": 2,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.762,
+     "program_seconds": 0.758,
      "exit_statuses": [
       0
      ]
@@ -175,7 +175,7 @@
     "sales-order": {
      "printed": true,
      "status": 200,
-     "seconds": 1.1,
+     "seconds": 1.06,
      "pages": 2,
      "error": null,
      "error_name": null,
@@ -201,12 +201,12 @@
     "purchase-order": {
      "printed": true,
      "status": 200,
-     "seconds": 1.06,
+     "seconds": 1.07,
      "pages": 2,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.759,
+     "program_seconds": 0.757,
      "exit_statuses": [
       0
      ]
@@ -214,12 +214,12 @@
     "sales-invoice-missing-image": {
      "printed": true,
      "status": 200,
-     "seconds": 1.13,
+     "seconds": 1.12,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.893,
+     "program_seconds": 0.885,
      "exit_statuses": [
       0
      ]
@@ -239,13 +239,13 @@
    "cases": 8,
    "printed": 8,
    "route_seconds": {
-    "total": 4.87,
-    "median": 0.46,
+    "total": 4.75,
+    "median": 0.475,
     "count": 8
    },
    "program_seconds": {
-    "total": 1.42,
-    "median": 0.132,
+    "total": 1.38,
+    "median": 0.128,
     "count": 8
    },
    "exit_statuses": {
@@ -255,12 +255,12 @@
     "sales-invoice-1-page": {
      "printed": true,
      "status": 200,
-     "seconds": 1.36,
+     "seconds": 1.31,
      "pages": 1,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.12,
+     "program_seconds": 0.118,
      "exit_statuses": [
       0
      ]
@@ -268,12 +268,12 @@
     "sales-invoice-long": {
      "printed": true,
      "status": 200,
-     "seconds": 0.62,
+     "seconds": 0.6,
      "pages": 4,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.179,
+     "program_seconds": 0.171,
      "exit_statuses": [
       0
      ]
@@ -281,12 +281,12 @@
     "sales-invoices-3-at-once": {
      "printed": true,
      "status": 200,
-     "seconds": 0.75,
+     "seconds": 0.72,
      "pages": 3,
      "error": null,
      "error_name": null,
      "calls": 3,
-     "program_seconds": 0.331,
+     "program_seconds": 0.318,
      "exit_statuses": [
       0
      ]
@@ -294,12 +294,12 @@
     "quotation": {
      "printed": true,
      "status": 200,
-     "seconds": 0.41,
+     "seconds": 0.37,
      "pages": 2,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.131,
+     "program_seconds": 0.126,
      "exit_statuses": [
       0
      ]
@@ -307,12 +307,12 @@
     "sales-order": {
      "printed": true,
      "status": 200,
-     "seconds": 0.43,
+     "seconds": 0.42,
      "pages": 2,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.13,
+     "program_seconds": 0.128,
      "exit_statuses": [
       0
      ]
@@ -325,7 +325,7 @@
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.127,
+     "program_seconds": 0.128,
      "exit_statuses": [
       0
      ]
@@ -333,12 +333,12 @@
     "purchase-order": {
      "printed": true,
      "status": 200,
-     "seconds": 0.43,
+     "seconds": 0.46,
      "pages": 2,
      "error": null,
      "error_name": null,
      "calls": 1,
-     "program_seconds": 0.133,
+     "program_seconds": 0.128,
      "exit_statuses": [
       0
      ]
@@ -498,5 +498,5 @@
    }
   }
  },
- "run_url": "https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/44932224198"
+ "run_url": "https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/45132937753"
 }
