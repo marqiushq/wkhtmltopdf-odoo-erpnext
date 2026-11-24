@@ -1,0 +1,1143 @@
+{
+ "app": "odoo",
+ "series": "18.0",
+ "release": "18.0.20261112",
+ "image": "odoo@sha256:0bd79cf07f59105c5697667c2241b86447e99c6adb036200df0e4e295785bdf3",
+ "arch": "x86-64",
+ "started": "2026-11-24T09:14:35Z",
+ "ended": "2026-11-24T09:18:15Z",
+ "reference": "ubuntu24-wkhtmltopdf",
+ "programs": {
+  "wkhtmltopdf": {
+   "version": "0.12.6.1-3",
+   "file": "wkhtmltox_0.12.6.1-3.jammy_amd64.deb",
+   "sha256": "4f723b2691ad8638a9df960e0421d346d7315083e3583a334f33362280ddba15",
+   "url": "https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.jammy_amd64.deb",
+   "checked": "programs.json",
+   "attestation": "none published (2023, before attestations)"
+  },
+  "marqius": {
+   "version": "0.12.15",
+   "file": "marqius-wkhtmltopdf-linux-x86_64",
+   "sha256": "09dee849aa1818b5354f9a29d0fd67cb01d2a9b0bc30aaf34bb85dce35ccc7bd",
+   "url": "https://marqius.com/download/marqius-wkhtmltopdf/0.12.15/marqius-wkhtmltopdf-linux-x86_64",
+   "checked": "https://marqius.com/download/marqius-wkhtmltopdf/0.12.15/marqius-wkhtmltopdf-linux-x86_64.sha256",
+   "attestation": "verified: signed by https://github.com/marqiushq/marqius-wkhtmltopdf/.github/workflows/release.yml@refs/heads/main, https://github.com/marqiushq/marqius-wkhtmltopdf/actions/runs/45356903168/attempts/1"
+  }
+ },
+ "cases": [
+  {
+   "name": "invoice-1-page",
+   "report": "invoice",
+   "names": [
+    "INV/2026/00005"
+   ]
+  },
+  {
+   "name": "invoice-3-pages",
+   "report": "invoice",
+   "names": [
+    "INV/2026/00006"
+   ]
+  },
+  {
+   "name": "invoices-3-at-once",
+   "report": "invoice",
+   "names": [
+    "INV/2026/00007",
+    "INV/2026/00008",
+    "INV/2026/00009"
+   ]
+  },
+  {
+   "name": "invoices-2-companies",
+   "report": "invoice",
+   "names": [
+    "INV/2026/00010",
+    "INV/2026/00001"
+   ]
+  },
+  {
+   "name": "quotation",
+   "report": "quotation",
+   "names": [
+    "S00025"
+   ]
+  },
+  {
+   "name": "quotation-long",
+   "report": "quotation",
+   "names": [
+    "S00026"
+   ]
+  },
+  {
+   "name": "quotations-3-at-once",
+   "report": "quotation",
+   "names": [
+    "S00027",
+    "S00028",
+    "S00029"
+   ]
+  },
+  {
+   "name": "delivery-slip",
+   "report": "delivery",
+   "names": [
+    "WH/OUT/00014"
+   ]
+  },
+  {
+   "name": "delivery-slips-3-at-once",
+   "report": "delivery",
+   "names": [
+    "WH/OUT/00012",
+    "WH/OUT/00013",
+    "WH/OUT/00014"
+   ]
+  },
+  {
+   "name": "picking-operations",
+   "report": "picking",
+   "names": [
+    "WH/OUT/00012"
+   ]
+  },
+  {
+   "name": "invoice-missing-image",
+   "report": "invoice",
+   "names": [
+    "INV/2026/00011"
+   ]
+  },
+  {
+   "name": "invoices-missing-image-2-at-once",
+   "report": "invoice",
+   "names": [
+    "INV/2026/00012",
+    "INV/2026/00013"
+   ]
+  },
+  {
+   "name": "invoice-missing-png-only",
+   "report": "invoice",
+   "names": [
+    "INV/2026/00014"
+   ]
+  }
+ ],
+ "setup_notes": [
+  "company My Company (San Francisco) layout None font Lato paperformat US Letter",
+  "products ['[DESK0005] Customizable Desk (Custom, White)', '[DESK0006] Customizable Desk (Custom, Black)', '[E-COM06] Corner Desk Right Sit', '[E-COM07] Large Cabinet', '[E-COM08] Storage Box', '[E-COM09] Large Desk', '[E-COM10] Pedal Bin', '[E-COM11] Cabinet with Doors', '[E-COM12] Conference Chair (Steel)', '[E-COM13] Conference Chair (Aluminium)', '[FURN_0001] Desk Organizer', '[FURN_0002] Desk Pad']",
+  "partners ['Wood Corner', 'Acme Corporation', 'Gemini Furniture', 'Ready Mat', 'OpenWood', 'The Jackson Group', 'Azure Interior', 'Lumber Inc']",
+  "sale orders [('S00025', 'draft', 4), ('S00026', 'draft', 45), ('S00027', 'draft', 3), ('S00028', 'sale', 6), ('S00029', 'sale', 5), ('S00030', 'sale', 4)]",
+  "pickings {'pick4': ('WH/OUT/00012', 'assigned'), 'pick5': ('WH/OUT/00013', 'assigned'), 'pick6': ('WH/OUT/00014', 'assigned')}",
+  "validation asked for confirm.stock.sms",
+  "pick6 validated assigned",
+  "narration kept as <p>Terms: payment within 30 days.</p><p><img src=\"/web/static/img/marqius-test-missing.png\" alt=\"missing png\"><img src=\"/web/static/img/marqius-test-missing.svg\" alt=\"missing svg\"></p>",
+  "second company Northwind Trading Inc INV/2026/00001 Northwind Trading Inc",
+  "invoices {'A': ('INV/2026/00005', 'My Company (San Francisco)', 3), 'B': ('INV/2026/00006', 'My Company (San Francisco)', 50), 'C': ('INV/2026/00007', 'My Company (San Francisco)', 2), 'D': ('INV/2026/00008', 'My Company (San Francisco)', 30), 'E': ('INV/2026/00009', 'My Company (San Francisco)', 3), 'F': ('INV/2026/00010', 'My Company (San Francisco)', 3), 'H': ('INV/2026/00011', 'My Company (San Francisco)', 3), 'J': ('INV/2026/00012', 'My Company (San Francisco)', 2), 'K': ('INV/2026/00013', 'My Company (San Francisco)', 4), 'L': ('INV/2026/00014', 'My Company (San Francisco)', 2), 'G': ('INV/2026/00001', 'Northwind Trading Inc', 3)}",
+  "paper format US Letter {'format': 'Letter', 'margin_top': 52.0, 'margin_bottom': 32.0, 'margin_left': 0.0, 'margin_right': 0.0, 'header_spacing': 52, 'dpi': 90, 'orientation': 'Portrait', 'disable_shrinking': False, 'header_line': False}"
+ ],
+ "sides": {
+  "ubuntu24-wkhtmltopdf": {
+   "system": "ubuntu24",
+   "program": "wkhtmltopdf",
+   "says": "wkhtmltopdf 0.12.6.1 (with patched qt)\nexit status 0",
+   "application_check": {
+    "route": "/report/check_wkhtmltopdf",
+    "state": "ok"
+   },
+   "application_view": {
+    "wkhtmltopdf_dpi_zoom_ratio": true,
+    "wkhtmltopdf_state": "ok"
+   },
+   "cases": 13,
+   "printed": 13,
+   "route_seconds": {
+    "total": 49.71,
+    "median": 4.19,
+    "count": 13
+   },
+   "program_seconds": {
+    "total": 48.72,
+    "median": 4.143,
+    "count": 13
+   },
+   "exit_statuses": {
+    "0": 11,
+    "1": 2
+   },
+   "per_case": {
+    "invoice-1-page": {
+     "printed": true,
+     "status": 200,
+     "seconds": 4.95,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 4.768,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "invoice-3-pages": {
+     "printed": true,
+     "status": 200,
+     "seconds": 4.27,
+     "pages": 4,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 4.205,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "invoices-3-at-once": {
+     "printed": true,
+     "status": 200,
+     "seconds": 4.41,
+     "pages": 5,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 4.266,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "invoices-2-companies": {
+     "printed": true,
+     "status": 200,
+     "seconds": 4.19,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 4.143,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "quotation": {
+     "printed": true,
+     "status": 200,
+     "seconds": 4.19,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 4.097,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "quotation-long": {
+     "printed": true,
+     "status": 200,
+     "seconds": 4.26,
+     "pages": 4,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 4.204,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "quotations-3-at-once": {
+     "printed": true,
+     "status": 200,
+     "seconds": 4.25,
+     "pages": 3,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 4.194,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "delivery-slip": {
+     "printed": true,
+     "status": 200,
+     "seconds": 4.17,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 4.097,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "delivery-slips-3-at-once": {
+     "printed": true,
+     "status": 200,
+     "seconds": 4.25,
+     "pages": 3,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 4.194,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "picking-operations": {
+     "printed": true,
+     "status": 200,
+     "seconds": 4.19,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 4.099,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "invoice-missing-image": {
+     "printed": true,
+     "status": 200,
+     "seconds": 2.23,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 2.195,
+     "exit_statuses": [
+      1
+     ]
+    },
+    "invoices-missing-image-2-at-once": {
+     "printed": true,
+     "status": 200,
+     "seconds": 2.21,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 2.155,
+     "exit_statuses": [
+      1
+     ]
+    },
+    "invoice-missing-png-only": {
+     "printed": true,
+     "status": 200,
+     "seconds": 2.14,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 2.106,
+     "exit_statuses": [
+      0
+     ]
+    }
+   }
+  },
+  "ubuntu24-marqius": {
+   "system": "ubuntu24",
+   "program": "marqius",
+   "says": "wkhtmltopdf 0.12.6 (with patched qt) (compatible; marqius-wkhtmltopdf 0.12.15)\nexit status 0",
+   "application_check": {
+    "route": "/report/check_wkhtmltopdf",
+    "state": "ok"
+   },
+   "application_view": {
+    "wkhtmltopdf_dpi_zoom_ratio": true,
+    "wkhtmltopdf_state": "ok"
+   },
+   "cases": 13,
+   "printed": 13,
+   "route_seconds": {
+    "total": 3.84,
+    "median": 0.21,
+    "count": 13
+   },
+   "program_seconds": {
+    "total": 2.81,
+    "median": 0.172,
+    "count": 13
+   },
+   "exit_statuses": {
+    "0": 11,
+    "1": 2
+   },
+   "per_case": {
+    "invoice-1-page": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.94,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.765,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "invoice-3-pages": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.21,
+     "pages": 4,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.147,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "invoices-3-at-once": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.44,
+     "pages": 5,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.305,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "invoices-2-companies": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.21,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.165,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "quotation": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.17,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.088,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "quotation-long": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.2,
+     "pages": 4,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.145,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "quotations-3-at-once": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.29,
+     "pages": 3,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.232,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "delivery-slip": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.32,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.189,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "delivery-slips-3-at-once": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.32,
+     "pages": 3,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.235,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "picking-operations": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.18,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.09,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "invoice-missing-image": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.21,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.179,
+     "exit_statuses": [
+      1
+     ]
+    },
+    "invoices-missing-image-2-at-once": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.22,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.172,
+     "exit_statuses": [
+      1
+     ]
+    },
+    "invoice-missing-png-only": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.13,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.094,
+     "exit_statuses": [
+      0
+     ]
+    }
+   }
+  },
+  "debian13-marqius": {
+   "system": "debian13",
+   "program": "marqius",
+   "says": "wkhtmltopdf 0.12.6 (with patched qt) (compatible; marqius-wkhtmltopdf 0.12.15)\nexit status 0",
+   "application_check": {
+    "route": "/report/check_wkhtmltopdf",
+    "state": "ok"
+   },
+   "application_view": {
+    "wkhtmltopdf_dpi_zoom_ratio": true,
+    "wkhtmltopdf_state": "ok"
+   },
+   "cases": 13,
+   "printed": 13,
+   "route_seconds": {
+    "total": 3.82,
+    "median": 0.25,
+    "count": 13
+   },
+   "program_seconds": {
+    "total": 2.76,
+    "median": 0.165,
+    "count": 13
+   },
+   "exit_statuses": {
+    "0": 11,
+    "1": 2
+   },
+   "per_case": {
+    "invoice-1-page": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.9,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.698,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "invoice-3-pages": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.21,
+     "pages": 4,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.149,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "invoices-3-at-once": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.38,
+     "pages": 5,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.305,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "invoices-2-companies": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.21,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.165,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "quotation": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.18,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.089,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "quotation-long": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.2,
+     "pages": 4,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.145,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "quotations-3-at-once": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.29,
+     "pages": 3,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.234,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "delivery-slip": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.32,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.176,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "delivery-slips-3-at-once": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.29,
+     "pages": 3,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.235,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "picking-operations": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.18,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.09,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "invoice-missing-image": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.25,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.13,
+     "exit_statuses": [
+      1
+     ]
+    },
+    "invoices-missing-image-2-at-once": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.29,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.25,
+     "exit_statuses": [
+      1
+     ]
+    },
+    "invoice-missing-png-only": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.12,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.094,
+     "exit_statuses": [
+      0
+     ]
+    }
+   }
+  }
+ },
+ "compare": {
+  "ubuntu24-marqius": {
+   "verdict": "GO: nothing blocking and nothing to look at",
+   "compare_said": "GO: nothing blocking and nothing to look at",
+   "blocking": 0,
+   "review": 0,
+   "pictures_rechecked": 0,
+   "pairs": {
+    "delivery-slip": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      1,
+      1
+     ],
+     "reasons": [
+      "5 lines from \"Delivery Address: The Jackson Group 1611\" moved 22.8 pt to the left",
+      "the line \"\uf095 (334)-502-1024\" moved 22.6 pt to the left, 1.2 pt down",
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them"
+     ],
+     "pictures": null
+    },
+    "delivery-slips-3-at-once": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      3,
+      3
+     ],
+     "reasons": [
+      "5 lines from \"Delivery Address: Ready Mat 7500 W\" moved 22.8 pt to the left",
+      "the line \"\uf095 (803)-873-6126\" moved 22.6 pt to the left, 1.2 pt down",
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "5 lines from \"Delivery Address: OpenWood Orval 1 6823\" moved 22.8 pt to the left"
+     ],
+     "pictures": null
+    },
+    "invoice-1-page": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      1,
+      1
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them"
+     ],
+     "pictures": null
+    },
+    "invoice-3-pages": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      4,
+      4
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "page 2 lacks rules, frames or tints in 1 place where the old page has them",
+      "page 3 lacks rules, frames or tints in 1 place where the old page has them",
+      "page 4 lacks rules, frames or tints in 1 place where the old page has them"
+     ],
+     "pictures": null
+    },
+    "invoice-missing-image": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      1,
+      1
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 2 places where the old page has them"
+     ],
+     "pictures": null
+    },
+    "invoice-missing-png-only": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      1,
+      1
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 2 places where the old page has them"
+     ],
+     "pictures": null
+    },
+    "invoices-2-companies": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      2,
+      2
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "page 2 lacks rules, frames or tints in 1 place where the old page has them"
+     ],
+     "pictures": null
+    },
+    "invoices-3-at-once": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      5,
+      5
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "page 2 lacks rules, frames or tints in 1 place where the old page has them",
+      "page 3 lacks rules, frames or tints in 1 place where the old page has them",
+      "the line \"[FURN_0002] Desk Pad\" moved 6.5 pt up"
+     ],
+     "pictures": null
+    },
+    "invoices-missing-image-2-at-once": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      2,
+      2
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 2 places where the old page has them",
+      "page 2 lacks rules, frames or tints in 2 places where the old page has them"
+     ],
+     "pictures": null
+    },
+    "picking-operations": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      1,
+      1
+     ],
+     "reasons": [
+      "the line \"\uf095 (803)-873-6126\" moved 1.2 pt down",
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them"
+     ],
+     "pictures": null
+    },
+    "quotation": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      1,
+      1
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "4 lines from \"Untaxed Amount $ 5,739.00 Total $\" moved 9.7 pt up"
+     ],
+     "pictures": null
+    },
+    "quotation-long": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      4,
+      4
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "6 lines from \"[E-COM11] Cabinet with Doors 5.00 Units\" moved 4.6 pt up",
+      "2 lines from \"33.00 $ 33.00\" moved 4.6 pt up",
+      "2 lines from \"[E-COM13] Conference Chair (Aluminium) 4.00 Units\" moved 4.6 pt up"
+     ],
+     "pictures": null
+    },
+    "quotations-3-at-once": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      3,
+      3
+     ],
+     "reasons": [
+      "the line \"Taxes\" moved 1.2 pt to the left",
+      "page 2 lacks rules, frames or tints in 1 place where the old page has them",
+      "page 3 lacks rules, frames or tints in 1 place where the old page has them"
+     ],
+     "pictures": null
+    }
+   }
+  },
+  "debian13-marqius": {
+   "verdict": "GO: nothing blocking and nothing to look at",
+   "compare_said": "GO: nothing blocking and nothing to look at",
+   "blocking": 0,
+   "review": 0,
+   "pictures_rechecked": 0,
+   "pairs": {
+    "delivery-slip": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      1,
+      1
+     ],
+     "reasons": [
+      "5 lines from \"Delivery Address: The Jackson Group 1611\" moved 22.8 pt to the left",
+      "the line \"\uf095 (334)-502-1024\" moved 22.6 pt to the left, 1.2 pt down",
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them"
+     ],
+     "pictures": null
+    },
+    "delivery-slips-3-at-once": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      3,
+      3
+     ],
+     "reasons": [
+      "5 lines from \"Delivery Address: Ready Mat 7500 W\" moved 22.8 pt to the left",
+      "the line \"\uf095 (803)-873-6126\" moved 22.6 pt to the left, 1.2 pt down",
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "5 lines from \"Delivery Address: OpenWood Orval 1 6823\" moved 22.8 pt to the left"
+     ],
+     "pictures": null
+    },
+    "invoice-1-page": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      1,
+      1
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them"
+     ],
+     "pictures": null
+    },
+    "invoice-3-pages": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      4,
+      4
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "page 2 lacks rules, frames or tints in 1 place where the old page has them",
+      "page 3 lacks rules, frames or tints in 1 place where the old page has them",
+      "page 4 lacks rules, frames or tints in 1 place where the old page has them"
+     ],
+     "pictures": null
+    },
+    "invoice-missing-image": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      1,
+      1
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 2 places where the old page has them"
+     ],
+     "pictures": null
+    },
+    "invoice-missing-png-only": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      1,
+      1
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 2 places where the old page has them"
+     ],
+     "pictures": null
+    },
+    "invoices-2-companies": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      2,
+      2
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "page 2 lacks rules, frames or tints in 1 place where the old page has them"
+     ],
+     "pictures": null
+    },
+    "invoices-3-at-once": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      5,
+      5
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "page 2 lacks rules, frames or tints in 1 place where the old page has them",
+      "page 3 lacks rules, frames or tints in 1 place where the old page has them",
+      "the line \"[FURN_0002] Desk Pad\" moved 6.5 pt up"
+     ],
+     "pictures": null
+    },
+    "invoices-missing-image-2-at-once": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      2,
+      2
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 2 places where the old page has them",
+      "page 2 lacks rules, frames or tints in 2 places where the old page has them"
+     ],
+     "pictures": null
+    },
+    "picking-operations": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      1,
+      1
+     ],
+     "reasons": [
+      "the line \"\uf095 (803)-873-6126\" moved 1.2 pt down",
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them"
+     ],
+     "pictures": null
+    },
+    "quotation": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      1,
+      1
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "4 lines from \"Untaxed Amount $ 5,739.00 Total $\" moved 9.7 pt up"
+     ],
+     "pictures": null
+    },
+    "quotation-long": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      4,
+      4
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "6 lines from \"[E-COM11] Cabinet with Doors 5.00 Units\" moved 4.6 pt up",
+      "2 lines from \"33.00 $ 33.00\" moved 4.6 pt up",
+      "2 lines from \"[E-COM13] Conference Chair (Aluminium) 4.00 Units\" moved 4.6 pt up"
+     ],
+     "pictures": null
+    },
+    "quotations-3-at-once": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      3,
+      3
+     ],
+     "reasons": [
+      "the line \"Taxes\" moved 1.2 pt to the left",
+      "page 2 lacks rules, frames or tints in 1 place where the old page has them",
+      "page 3 lacks rules, frames or tints in 1 place where the old page has them"
+     ],
+     "pictures": null
+    }
+   }
+  }
+ },
+ "run_url": "https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/45363151857"
+}
