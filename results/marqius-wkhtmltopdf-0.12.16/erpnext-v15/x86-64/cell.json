@@ -1,0 +1,502 @@
+{
+ "app": "erpnext",
+ "series": "v15",
+ "release": "ERPNext 15.126.0 with Frappe 15.127.1",
+ "image": "frappe/erpnext@sha256:5386132243cc562ab52af7b11d152a0596a611fed868dcc54174a9867eab1806",
+ "arch": "x86-64",
+ "started": "2026-11-24T12:53:24Z",
+ "ended": "2026-11-24T12:56:54Z",
+ "reference": "bookworm-wkhtmltopdf",
+ "programs": {
+  "wkhtmltopdf": {
+   "version": "0.12.6.1-3",
+   "file": "wkhtmltox_0.12.6.1-3.jammy_amd64.deb",
+   "sha256": "4f723b2691ad8638a9df960e0421d346d7315083e3583a334f33362280ddba15",
+   "url": "https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.jammy_amd64.deb",
+   "checked": "programs.json",
+   "attestation": "none published (2023, before attestations)"
+  },
+  "marqius": {
+   "version": "0.12.16",
+   "file": "marqius-wkhtmltopdf-linux-x86_64",
+   "sha256": "24be7b357e61d6facb96aa90342c3f28fe9dd000e03caddbbe82661d9a76b636",
+   "url": "https://marqius.com/download/marqius-wkhtmltopdf/0.12.16/marqius-wkhtmltopdf-linux-x86_64",
+   "checked": "https://marqius.com/download/marqius-wkhtmltopdf/0.12.16/marqius-wkhtmltopdf-linux-x86_64.sha256",
+   "attestation": "verified: signed by https://github.com/marqiushq/marqius-wkhtmltopdf/.github/workflows/release.yml@refs/heads/main, https://github.com/marqiushq/marqius-wkhtmltopdf/actions/runs/45381548316/attempts/1"
+  }
+ },
+ "cases": [
+  {
+   "name": "sales-invoice-1-page",
+   "report": "Sales Invoice",
+   "names": [
+    "WKT-SINV-1"
+   ]
+  },
+  {
+   "name": "sales-invoice-long",
+   "report": "Sales Invoice",
+   "names": [
+    "WKT-SINV-2"
+   ]
+  },
+  {
+   "name": "sales-invoices-3-at-once",
+   "report": "Sales Invoice",
+   "names": [
+    "WKT-SINV-1",
+    "WKT-SINV-3",
+    "WKT-SINV-4"
+   ]
+  },
+  {
+   "name": "quotation",
+   "report": "Quotation",
+   "names": [
+    "WKT-QTN-1"
+   ]
+  },
+  {
+   "name": "sales-order",
+   "report": "Sales Order",
+   "names": [
+    "WKT-SO-1"
+   ]
+  },
+  {
+   "name": "delivery-note",
+   "report": "Delivery Note",
+   "names": [
+    "WKT-DN-1"
+   ]
+  },
+  {
+   "name": "purchase-order",
+   "report": "Purchase Order",
+   "names": [
+    "WKT-PO-1"
+   ]
+  },
+  {
+   "name": "sales-invoice-missing-image",
+   "report": "Sales Invoice",
+   "names": [
+    "WKT-SINV-5"
+   ]
+  }
+ ],
+ "setup_notes": [
+  {
+   "frappe": "15.127.1",
+   "erpnext": "15.126.0",
+   "pdf_generator": "wkhtmltopdf (the only one)",
+   "letter_head": "WKT Letter Head"
+  }
+ ],
+ "sides": {
+  "bookworm-wkhtmltopdf": {
+   "system": "bookworm",
+   "program": "wkhtmltopdf",
+   "says": "wkhtmltopdf 0.12.6.1 (with patched qt)\nexit status 0",
+   "application_check": {
+    "route": "frappe.utils.pdf.is_wkhtmltopdf_valid",
+    "status": 200,
+    "answer": true
+   },
+   "application_view": null,
+   "cases": 8,
+   "printed": 8,
+   "route_seconds": {
+    "total": 10.77,
+    "median": 1.025,
+    "count": 8
+   },
+   "program_seconds": {
+    "total": 7.87,
+    "median": 0.792,
+    "count": 8
+   },
+   "exit_statuses": {
+    "0": 10
+   },
+   "per_case": {
+    "sales-invoice-1-page": {
+     "printed": true,
+     "status": 200,
+     "seconds": 2.08,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 1.042,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "sales-invoice-long": {
+     "printed": true,
+     "status": 200,
+     "seconds": 1.28,
+     "pages": 4,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.903,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "sales-invoices-3-at-once": {
+     "printed": true,
+     "status": 200,
+     "seconds": 2.48,
+     "pages": 3,
+     "error": null,
+     "error_name": null,
+     "calls": 3,
+     "program_seconds": 2.133,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "quotation": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.95,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.736,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "sales-order": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.99,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.737,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "delivery-note": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.94,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.738,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "purchase-order": {
+     "printed": true,
+     "status": 200,
+     "seconds": 1.01,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.736,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "sales-invoice-missing-image": {
+     "printed": true,
+     "status": 200,
+     "seconds": 1.04,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.847,
+     "exit_statuses": [
+      0
+     ]
+    }
+   }
+  },
+  "bookworm-marqius": {
+   "system": "bookworm",
+   "program": "marqius",
+   "says": "wkhtmltopdf 0.12.6 (with patched qt) (compatible; marqius-wkhtmltopdf 0.12.16)\nexit status 0",
+   "application_check": {
+    "route": "frappe.utils.pdf.is_wkhtmltopdf_valid",
+    "status": 200,
+    "answer": true
+   },
+   "application_view": null,
+   "cases": 8,
+   "printed": 8,
+   "route_seconds": {
+    "total": 4.14,
+    "median": 0.395,
+    "count": 8
+   },
+   "program_seconds": {
+    "total": 1.3,
+    "median": 0.12,
+    "count": 8
+   },
+   "exit_statuses": {
+    "0": 10
+   },
+   "per_case": {
+    "sales-invoice-1-page": {
+     "printed": true,
+     "status": 200,
+     "seconds": 1.13,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.12,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "sales-invoice-long": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.54,
+     "pages": 4,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.162,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "sales-invoices-3-at-once": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.65,
+     "pages": 3,
+     "error": null,
+     "error_name": null,
+     "calls": 3,
+     "program_seconds": 0.308,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "quotation": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.33,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.12,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "sales-order": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.37,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.119,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "delivery-note": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.33,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.118,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "purchase-order": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.38,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.12,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "sales-invoice-missing-image": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.41,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.234,
+     "exit_statuses": [
+      0
+     ]
+    }
+   }
+  }
+ },
+ "compare": {
+  "bookworm-marqius": {
+   "verdict": "GO: nothing blocking and nothing to look at",
+   "compare_said": "GO: nothing blocking and nothing to look at",
+   "blocking": 0,
+   "review": 0,
+   "pictures_rechecked": 0,
+   "pairs": {
+    "delivery-note": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      2,
+      2
+     ],
+     "reasons": [
+      "the line \"Total Quantity:\": the words stand up to 1.5 pt from where they stood along the line",
+      "the line \"$ 1,048.50\" moved 1.3 pt to the right",
+      "the line \"Rounded Total:\": the words stand up to 1.1 pt from where they stood along the line",
+      "the line \"$ 1,048.50\" moved 1.8 pt to the right"
+     ],
+     "pictures": null
+    },
+    "purchase-order": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      2,
+      2
+     ],
+     "reasons": [
+      "rules, frames or tints differ on page 1: 7 places only in the old, 14 only in the new",
+      "9 lines from \"8 WKT-18 Bookshelf, model 18, 120\" moved 27 pt up",
+      "the line \"Total Quantity:\" moved 27 pt up",
+      "the line \"$ 1,048.50\" moved 1.3 pt to the right, 27 pt up"
+     ],
+     "pictures": null
+    },
+    "quotation": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      2,
+      2
+     ],
+     "reasons": [
+      "the line \"Valid Till:\": the words stand up to 1 pt from where they stood along the line",
+      "rules, frames or tints differ on page 1: 7 places only in the old, 14 only in the new",
+      "9 lines from \"8 WKT-09 Storage Box, model 09,\" moved 27 pt up",
+      "the line \"Total Quantity:\" moved 27 pt up"
+     ],
+     "pictures": null
+    },
+    "sales-invoice-1-page": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      1,
+      1
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "the line \"Payment Due Date:\": the words stand up to 1 pt from where they stood along the line",
+      "the line \"Total Quantity:\": the words stand up to 1.5 pt from where they stood along the line",
+      "the line \"$ 276.00\" moved 1.6 pt to the right"
+     ],
+     "pictures": null
+    },
+    "sales-invoice-long": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      4,
+      4
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "the line \"Payment Due Date:\": the words stand up to 1 pt from where they stood along the line",
+      "the line \"Northwind Traders \u00b7 Registered in Illinois\": the words stand up to 1.5 pt from where they stood along the line",
+      "rules, frames or tints differ on page 2: 50 places only in the old, 58 only in the new"
+     ],
+     "pictures": null
+    },
+    "sales-invoice-missing-image": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      1,
+      1
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 2 places where the old page has them",
+      "the line \"Payment Due Date:\": the words stand up to 1 pt from where they stood along the line",
+      "the line \"Total Quantity:\": the words stand up to 1.5 pt from where they stood along the line",
+      "the line \"$ 276.00\" moved 1.6 pt to the right"
+     ],
+     "pictures": null
+    },
+    "sales-invoices-3-at-once": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      3,
+      3
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "the line \"Payment Due Date:\": the words stand up to 1 pt from where they stood along the line",
+      "the line \"Total Quantity:\": the words stand up to 1.5 pt from where they stood along the line",
+      "the line \"$ 276.00\" moved 1.6 pt to the right"
+     ],
+     "pictures": null
+    },
+    "sales-order": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      2,
+      2
+     ],
+     "reasons": [
+      "rules, frames or tints differ on page 1: 7 places only in the old, 14 only in the new",
+      "9 lines from \"8 WKT-12 Monitor Arm, model 12,\" moved 11.3 pt up",
+      "the line \"Total Quantity:\" moved 11.3 pt up",
+      "the line \"$ 1,048.50\" moved 1.3 pt to the right, 11.3 pt up"
+     ],
+     "pictures": null
+    }
+   }
+  }
+ },
+ "run_url": "https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/45397605777"
+}
