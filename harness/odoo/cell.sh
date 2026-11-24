@@ -65,7 +65,19 @@ pull() {
 }
 build() { # NAME FOLDER: an image of this cell, from FOLDER/Dockerfile
     log "building $1"
-    docker build --platform "$plat" -t "$P/$1:local" "$2" > "$out/build-$1.log" 2>&1 || {
+    # On GitHub, an image built only from public ones (CACHED_IMAGES) keeps its layers in GitHub's
+    # cache between runs (scope CELL_CACHE-NAME), with the "cells" builder the workflow makes: it then
+    # builds in seconds when Odoo's package and debian-deps.sh are unchanged. Elsewhere: docker build.
+    local how=(docker build)
+    case " ${CACHED_IMAGES:-} " in
+    *" $1 "*)
+        if [ -n "${CELL_CACHE:-}" ] && docker buildx inspect cells > /dev/null 2>&1; then
+            how=(docker buildx build --builder cells --load
+                --cache-from "type=gha,scope=$CELL_CACHE-$1"
+                --cache-to "type=gha,mode=max,scope=$CELL_CACHE-$1,ignore-error=true")
+        fi ;;
+    esac
+    "${how[@]}" --platform "$plat" -t "$P/$1:local" "$2" > "$out/build-$1.log" 2>&1 || {
         tail -40 "$out/build-$1.log"
         fail "the $1 image did not build"
     }

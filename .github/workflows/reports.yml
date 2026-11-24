@@ -150,12 +150,21 @@ jobs:
         with:
           name: programs
           path: programs
+      # the cell's images built only from public ones keep their layers in GitHub's cache (cell.sh's build)
+      - name: GitHub's cache, for the images built from public ones
+        uses: crazy-max/ghaction-github-runtime@04d248b84655b509d8c44dc1d6f990c879747487 # v4.0.0
+      - name: A builder that keeps layers in GitHub's cache
+        run: |
+          docker buildx create --name cells --driver docker-container --bootstrap > /dev/null 2>&1 ||
+            echo "no cached builder; the images build without it"
       - name: Print the reports with each program, and compare
         env:
           PROGRAMS: ${{ needs.plan.outputs.programs }}
           APP: ${{ matrix.app }}
           SERIES: ${{ matrix.series }}
           ARCH: ${{ matrix.arch }}
+          CELL_CACHE: cell-${{ matrix.app }}-${{ matrix.series }}-${{ matrix.arch }}
+          CACHED_IMAGES: debian13-base
         run: bash "$(jq -r --arg a "$APP" '.apps[$a].script' apps.json)" "$SERIES" "$ARCH" programs out
       - name: Keep what the report needs, and the PDFs beside it
         if: always()
