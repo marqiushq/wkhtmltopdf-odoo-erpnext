@@ -1,0 +1,499 @@
+{
+ "app": "erpnext",
+ "series": "v16",
+ "release": "ERPNext 16.60.0 with Frappe 16.60.2",
+ "image": "frappe/erpnext@sha256:a64a155445a39b29cc47071f01bc484d489108785178f5691a55c13e9dd98c83",
+ "arch": "arm64",
+ "started": "2026-11-24T06:13:40Z",
+ "ended": "2026-11-24T06:17:58Z",
+ "reference": "trixie-wkhtmltopdf",
+ "programs": {
+  "wkhtmltopdf": {
+   "version": "0.12.6.1-3",
+   "file": "wkhtmltox_0.12.6.1-3.jammy_arm64.deb",
+   "sha256": "2095f20256661ebf0983b9311168596c9d012666e21a94bc24f304db6ac69ec5",
+   "url": "https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.jammy_arm64.deb",
+   "checked": "programs.json",
+   "attestation": "none published (2023, before attestations)"
+  },
+  "marqius": {
+   "version": "0.12.14",
+   "file": "marqius-wkhtmltopdf-linux-arm64",
+   "sha256": "66236a466284bedd1af73db7d06cc2b990ac2057f6b13d2be7b88c3f4d79014a",
+   "url": "https://marqius.com/download/marqius-wkhtmltopdf/0.12.14/marqius-wkhtmltopdf-linux-arm64",
+   "checked": "https://marqius.com/download/marqius-wkhtmltopdf/0.12.14/marqius-wkhtmltopdf-linux-arm64.sha256",
+   "attestation": "verified: signed by https://github.com/marqiushq/marqius-wkhtmltopdf/.github/workflows/release.yml@refs/heads/main, https://github.com/marqiushq/marqius-wkhtmltopdf/actions/runs/45334849042/attempts/1"
+  }
+ },
+ "cases": [
+  {
+   "name": "sales-invoice-1-page",
+   "report": "Sales Invoice",
+   "names": [
+    "WKT-SINV-1"
+   ]
+  },
+  {
+   "name": "sales-invoice-long",
+   "report": "Sales Invoice",
+   "names": [
+    "WKT-SINV-2"
+   ]
+  },
+  {
+   "name": "sales-invoices-3-at-once",
+   "report": "Sales Invoice",
+   "names": [
+    "WKT-SINV-1",
+    "WKT-SINV-3",
+    "WKT-SINV-4"
+   ]
+  },
+  {
+   "name": "quotation",
+   "report": "Quotation",
+   "names": [
+    "WKT-QTN-1"
+   ]
+  },
+  {
+   "name": "sales-order",
+   "report": "Sales Order",
+   "names": [
+    "WKT-SO-1"
+   ]
+  },
+  {
+   "name": "delivery-note",
+   "report": "Delivery Note",
+   "names": [
+    "WKT-DN-1"
+   ]
+  },
+  {
+   "name": "purchase-order",
+   "report": "Purchase Order",
+   "names": [
+    "WKT-PO-1"
+   ]
+  },
+  {
+   "name": "sales-invoice-missing-image",
+   "report": "Sales Invoice",
+   "names": [
+    "WKT-SINV-5"
+   ]
+  }
+ ],
+ "setup_notes": [
+  {
+   "frappe": "16.60.2",
+   "erpnext": "16.60.0",
+   "pdf_generator": "wkhtmltopdf",
+   "letter_head": "WKT Letter Head"
+  }
+ ],
+ "sides": {
+  "trixie-wkhtmltopdf": {
+   "system": "trixie",
+   "program": "wkhtmltopdf",
+   "says": "wkhtmltopdf 0.12.6.1 (with patched qt)\nexit status 0",
+   "application_check": {
+    "route": "frappe.utils.pdf.is_wkhtmltopdf_valid",
+    "status": 200,
+    "answer": true
+   },
+   "application_view": null,
+   "cases": 8,
+   "printed": 8,
+   "route_seconds": {
+    "total": 11.67,
+    "median": 0.995,
+    "count": 8
+   },
+   "program_seconds": {
+    "total": 8.17,
+    "median": 0.796,
+    "count": 8
+   },
+   "exit_statuses": {
+    "0": 10
+   },
+   "per_case": {
+    "sales-invoice-1-page": {
+     "printed": true,
+     "status": 200,
+     "seconds": 2.83,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 1.055,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "sales-invoice-long": {
+     "printed": true,
+     "status": 200,
+     "seconds": 1.55,
+     "pages": 4,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.901,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "sales-invoices-3-at-once": {
+     "printed": true,
+     "status": 200,
+     "seconds": 2.53,
+     "pages": 3,
+     "error": null,
+     "error_name": null,
+     "calls": 3,
+     "program_seconds": 2.258,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "quotation": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.94,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.789,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "sales-order": {
+     "printed": true,
+     "status": 200,
+     "seconds": 1.0,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.792,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "delivery-note": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.92,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.79,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "purchase-order": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.99,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.788,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "sales-invoice-missing-image": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.91,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.799,
+     "exit_statuses": [
+      0
+     ]
+    }
+   }
+  },
+  "trixie-marqius": {
+   "system": "trixie",
+   "program": "marqius",
+   "says": "wkhtmltopdf 0.12.6 (with patched qt) (compatible; marqius-wkhtmltopdf 0.12.14)\nexit status 0",
+   "application_check": {
+    "route": "frappe.utils.pdf.is_wkhtmltopdf_valid",
+    "status": 200,
+    "answer": true
+   },
+   "application_view": null,
+   "cases": 8,
+   "printed": 8,
+   "route_seconds": {
+    "total": 4.64,
+    "median": 0.365,
+    "count": 8
+   },
+   "program_seconds": {
+    "total": 1.6,
+    "median": 0.146,
+    "count": 8
+   },
+   "exit_statuses": {
+    "0": 10
+   },
+   "per_case": {
+    "sales-invoice-1-page": {
+     "printed": true,
+     "status": 200,
+     "seconds": 1.92,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.135,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "sales-invoice-long": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.37,
+     "pages": 4,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.197,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "sales-invoices-3-at-once": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.64,
+     "pages": 3,
+     "error": null,
+     "error_name": null,
+     "calls": 3,
+     "program_seconds": 0.368,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "quotation": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.3,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.145,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "sales-order": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.36,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.147,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "delivery-note": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.28,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.146,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "purchase-order": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.35,
+     "pages": 2,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.144,
+     "exit_statuses": [
+      0
+     ]
+    },
+    "sales-invoice-missing-image": {
+     "printed": true,
+     "status": 200,
+     "seconds": 0.42,
+     "pages": 1,
+     "error": null,
+     "error_name": null,
+     "calls": 1,
+     "program_seconds": 0.314,
+     "exit_statuses": [
+      0
+     ]
+    }
+   }
+  }
+ },
+ "compare": {
+  "trixie-marqius": {
+   "verdict": "REVIEW: nothing blocking; 1 document to look at",
+   "compare_said": "NO-GO: 1 document with blocking differences",
+   "blocking": 0,
+   "review": 1,
+   "pictures_rechecked": 0,
+   "pairs": {
+    "delivery-note": {
+     "level": "review",
+     "compare_level": "blocking",
+     "compare_verdict": "content differs",
+     "pages": [
+      2,
+      2
+     ],
+     "reasons": [
+      "\"Amount Eligible\" stands elsewhere: the same words, broken across lines differently"
+     ],
+     "pictures": null
+    },
+    "purchase-order": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      2,
+      2
+     ],
+     "reasons": [
+      "the line \"Total Quantity:\": the words stand up to 1.5 pt from where they stood along the line",
+      "the line \"$ 1,048.50\" moved 1.3 pt to the right",
+      "the line \"Grand Total:\" stood on page 1 and now stands on page 2",
+      "the line \"Rounded Total:\" stood on page 1 and now stands on page 2"
+     ],
+     "pictures": null
+    },
+    "quotation": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      2,
+      2
+     ],
+     "reasons": [
+      "the line \"Valid Till:\": the words stand up to 1 pt from where they stood along the line",
+      "rules, frames or tints differ on page 1: 7 places only in the old, 14 only in the new",
+      "9 lines from \"8 WKT-09 Storage Box, model 09,\" moved 27 pt up",
+      "the line \"Total Quantity:\" moved 27 pt up"
+     ],
+     "pictures": null
+    },
+    "sales-invoice-1-page": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      1,
+      1
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "the line \"Payment Due Date:\": the words stand up to 1 pt from where they stood along the line",
+      "the line \"Total Quantity:\": the words stand up to 1.5 pt from where they stood along the line",
+      "the line \"$ 276.00\" moved 1.6 pt to the right"
+     ],
+     "pictures": null
+    },
+    "sales-invoice-long": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      4,
+      4
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "the line \"Payment Due Date:\": the words stand up to 1 pt from where they stood along the line",
+      "the line \"Northwind Traders \u00b7 Registered in Illinois\": the words stand up to 1.5 pt from where they stood along the line",
+      "rules, frames or tints differ on page 2: 53 places only in the old, 60 only in the new"
+     ],
+     "pictures": null
+    },
+    "sales-invoice-missing-image": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      1,
+      1
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 2 places where the old page has them",
+      "the line \"Payment Due Date:\": the words stand up to 1 pt from where they stood along the line",
+      "the line \"Total Quantity:\": the words stand up to 1.5 pt from where they stood along the line",
+      "the line \"$ 276.00\" moved 1.6 pt to the right"
+     ],
+     "pictures": null
+    },
+    "sales-invoices-3-at-once": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      3,
+      3
+     ],
+     "reasons": [
+      "page 1 lacks rules, frames or tints in 1 place where the old page has them",
+      "the line \"Payment Due Date:\": the words stand up to 1 pt from where they stood along the line",
+      "the line \"Total Quantity:\": the words stand up to 1.5 pt from where they stood along the line",
+      "the line \"$ 276.00\" moved 1.6 pt to the right"
+     ],
+     "pictures": null
+    },
+    "sales-order": {
+     "level": "cosmetic",
+     "compare_level": "cosmetic",
+     "compare_verdict": "appearance only",
+     "pages": [
+      2,
+      2
+     ],
+     "reasons": [
+      "the line \"Total Quantity:\": the words stand up to 1.5 pt from where they stood along the line",
+      "the line \"$ 1,048.50\" moved 1.3 pt to the right",
+      "the line \"Grand Total:\" stood on page 1 and now stands on page 2",
+      "the line \"$ 1,048.50\" stood on page 1 and now stands on page 2"
+     ],
+     "pictures": null
+    }
+   }
+  }
+ },
+ "run_url": "https://github.com/marqiushq/wkhtmltopdf-odoo-erpnext/actions/runs/45338507418"
+}
