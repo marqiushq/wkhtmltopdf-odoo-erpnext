@@ -5,8 +5,13 @@
 # Debian 13). Prints what it put in another's place and what it could not find.
 #
 #   sh debian-deps.sh PACKAGE.deb
+#   sh debian-deps.sh DEPENDS      (a file holding the package's Depends line alone)
 set -eu
 deb=$1
+case $deb in
+*.deb) depends=$(dpkg-deb -f "$deb" Depends) what="$(dpkg-deb -f "$deb" Package) $(dpkg-deb -f "$deb" Version)" ;;
+*) depends=$(cat "$deb") what="the package" ;;
+esac
 apt-get update -q > /dev/null
 have() { apt-cache show "$1" > /dev/null 2>&1; }
 successor() {
@@ -16,7 +21,7 @@ successor() {
 }
 want=""
 notes=""
-for item in $(dpkg-deb -f "$deb" Depends | sed 's/([^)]*)//g; s/:any//g; s/ //g' | tr ',' '\n'); do
+for item in $(echo "$depends" | sed 's/([^)]*)//g; s/:any//g; s/ //g' | tr ',' '\n'); do
     chosen=""
     for alt in $(echo "$item" | tr '|' ' '); do
         if have "$alt"; then
@@ -38,4 +43,4 @@ apt-get install -y -q --no-install-recommends $want > /tmp/apt.log 2>&1 || {
     exit 1
 }
 rm -rf /var/lib/apt/lists/* /tmp/apt.log
-echo "dependencies of $(dpkg-deb -f "$deb" Package) $(dpkg-deb -f "$deb" Version): installed; changed or missing:${notes:- none}"
+echo "dependencies of $what: installed; changed or missing:${notes:- none}"

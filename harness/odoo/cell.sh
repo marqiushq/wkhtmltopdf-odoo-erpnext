@@ -44,6 +44,7 @@ log() { printf '%s  %s\n' "$(date -u +%H:%M:%S)" "$*"; }
 fail() { echo "::error::$*" >&2; exit 1; }
 pf() { jq -r --arg p "$1" --arg a "$arch" --arg k "$2" '.files[] | select(.program == $p and .arch == $a) | .[$k]' "$progs/programs.json"; }
 cleanup() {
+    if [ -n "${late_pid:-}" ]; then kill "$late_pid" > /dev/null 2>&1 || true; fi
     for c in $(docker ps -aq --filter "name=^$P-"); do docker rm -f "$c" > /dev/null 2>&1 || true; done
     docker network rm "$net" > /dev/null 2>&1 || true
     docker volume rm "$vol" > /dev/null 2>&1 || true
@@ -66,8 +67,9 @@ pull() {
 build() { # NAME FOLDER: an image of this cell, from FOLDER/Dockerfile
     log "building $1"
     # On GitHub, an image built only from public ones (CACHED_IMAGES) keeps its layers in GitHub's
-    # cache between runs (scope CELL_CACHE-NAME), with the "cells" builder the workflow makes: it then
-    # builds in seconds when Odoo's package and debian-deps.sh are unchanged. Elsewhere: docker build.
+    # cache between runs (scope CELL_CACHE-NAME), with the "cells" builder the workflow makes: Odoo's
+    # dependencies then come from the cache while the package's Depends line and debian-deps.sh are
+    # unchanged, though the package is a new nightly every day. Elsewhere: docker build.
     local how=(docker build)
     case " ${CACHED_IMAGES:-} " in
     *" $1 "*)
@@ -121,54 +123,76 @@ install_lines() { # PROGRAM FOLDER: Dockerfile lines that put PROGRAM at /opt/wk
         echo "RUN (dpkg -r wkhtmltox > /dev/null 2>&1 || true) && MARQIUS_DOWNLOAD=file:///tmp/mq bash /tmp/mq/marqius-wkhtmltopdf.sh --version $mq --prefix /opt/wk && rm -rf /tmp/mq" ;;
     esac
 }
-sides=()
-for s in $systems; do
-    if [ "$s" = debian13 ]; then
-        d=$(folder debian13-base)
-        # Odoo's own Debian package, the very build inside Odoo's image: Odoo keeps every nightly
-        # package on its server (its apt index lists only the newest). It must hold exactly the files
-        # the image's copy installed: the package's list of files and checksums is compared with the
-        # one dpkg kept in the image.
-        odoo_deb=odoo_${release}_all.deb
-        curl -fsSL --retry 5 --retry-all-errors -o "$d/odoo.deb" "https://nightly.odoo.com/$v/nightly/deb/$odoo_deb" ||
-            fail "$odoo_deb could not be downloaded from nightly.odoo.com"
-        a=$(docker run --rm --platform "$plat" -v "$d:/w:ro" debian:trixie sh -c 'dpkg-deb -e /w/odoo.deb /tmp/c && sha256sum < /tmp/c/md5sums' | cut -c1-64)
-        b=$(docker run --rm --platform "$plat" --entrypoint sh "$image" -c 'sha256sum < /var/lib/dpkg/info/odoo.md5sums' | cut -c1-64)
-        [ -n "$a" ] && [ "$a" = "$b" ] || fail "$odoo_deb does not hold the files Odoo's image installed ($a, $b)"
-        log "$odoo_deb holds the same files as the Odoo in Odoo's image"
-        cp "$harness/debian-deps.sh" "$d/"
-        cat > "$d/Dockerfile" << EOF
+side_image() { # SYSTEM PROGRAM: the image of side SYSTEM-PROGRAM, made from that system's base
+    local d
+    d=$(folder "$1-$2")
+    {
+        if [ "$1" = ubuntu24 ]; then echo "FROM $image"; else echo "FROM $P/debian13-base:local"; fi
+        echo 'USER root'
+        install_lines "$2" "$d"
+        echo "$shim"
+        echo 'USER odoo'
+    } > "$d/Dockerfile"
+    build "$1-$2" "$d"
+}
+debian13_base() {
+    local d odoo_deb a b
+    d=$(folder debian13-base)
+    # Odoo's own Debian package, the very build inside Odoo's image: Odoo keeps every nightly
+    # package on its server (its apt index lists only the newest). It must hold exactly the files
+    # the image's copy installed: the package's list of files and checksums is compared with the
+    # one dpkg kept in the image.
+    odoo_deb=odoo_${release}_all.deb
+    curl -fsSL --retry 5 --retry-all-errors -o "$d/odoo.deb" "https://nightly.odoo.com/$v/nightly/deb/$odoo_deb" ||
+        fail "$odoo_deb could not be downloaded from nightly.odoo.com"
+    a=$(docker run --rm --platform "$plat" -v "$d:/w:ro" debian:trixie sh -c 'dpkg-deb -e /w/odoo.deb /tmp/c && sha256sum < /tmp/c/md5sums' | cut -c1-64)
+    b=$(docker run --rm --platform "$plat" --entrypoint sh "$image" -c 'sha256sum < /var/lib/dpkg/info/odoo.md5sums' | cut -c1-64)
+    [ -n "$a" ] && [ "$a" = "$b" ] || fail "$odoo_deb does not hold the files Odoo's image installed ($a, $b)"
+    log "$odoo_deb holds the same files as the Odoo in Odoo's image"
+    cp "$harness/debian-deps.sh" "$d/"
+    # the package's Depends line alone, for the layer that installs what it names: that line seldom
+    # changes, while the package is a new nightly build every day, so the layer stays in GitHub's cache
+    docker run --rm --platform "$plat" -v "$d:/w:ro" debian:trixie dpkg-deb -f /w/odoo.deb Depends > "$d/odoo.depends"
+    [ -s "$d/odoo.depends" ] || fail "$odoo_deb names no dependencies"
+    cat > "$d/Dockerfile" << EOF
 # Debian 13 with Odoo's own Debian package, the build in Odoo's image. As published it does not
 # install on Debian 13: it needs python3-pypdf2, which Debian 13 replaced with python3-pypdf (which
 # Odoo also reads). So its dependencies come from Debian 13, python3-pypdf in python3-pypdf2's place
-# (debian-deps.sh), and its files are unpacked where the package puts them. No PostgreSQL server: the
-# database runs in its own container. User odoo has the same id as in Odoo's image, so both can use
-# one data volume.
+# (debian-deps.sh, given the package's Depends line), and its files are unpacked where the package
+# puts them. No PostgreSQL server: the database runs in its own container. User odoo has the same id
+# as in Odoo's image, so both can use one data volume.
 FROM debian:trixie
 ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8
 RUN groupadd --system --gid $gid odoo && useradd --system --uid $uid --gid odoo --home-dir /var/lib/odoo --shell /usr/sbin/nologin odoo
-COPY odoo.deb debian-deps.sh /tmp/
-RUN sh /tmp/debian-deps.sh /tmp/odoo.deb | tee /odoo-dependencies.txt && dpkg-deb -x /tmp/odoo.deb / \\
- && rm -f /tmp/odoo.deb /tmp/debian-deps.sh && mkdir -p /var/lib/odoo && chown odoo:odoo /var/lib/odoo
+COPY odoo.depends debian-deps.sh /tmp/
+RUN sh /tmp/debian-deps.sh /tmp/odoo.depends | tee /odoo-dependencies.txt && rm -f /tmp/odoo.depends /tmp/debian-deps.sh
+COPY odoo.deb /tmp/
+RUN dpkg-deb -x /tmp/odoo.deb / && rm -f /tmp/odoo.deb && mkdir -p /var/lib/odoo && chown odoo:odoo /var/lib/odoo
 EOF
-        build debian13-base "$d"
-    fi
+    build debian13-base "$d"
+}
+sides=() early=() late=()
+for s in $systems; do
     for p in $programs; do
         [ "$s" = debian13 ] && [ "$p" = wkhtmltopdf ] && continue # Debian 13 has none to install
-        side=$s-$p
-        d=$(folder "$side")
-        {
-            if [ "$s" = ubuntu24 ]; then echo "FROM $image"; else echo "FROM $P/debian13-base:local"; fi
-            echo 'USER root'
-            install_lines "$p" "$d"
-            echo "$shim"
-            echo 'USER odoo'
-        } > "$d/Dockerfile"
-        build "$side" "$d"
-        sides+=("$side")
+        sides+=("$s-$p")
+        if [ "$s" = debian13 ]; then late+=("$s-$p"); else early+=("$s-$p"); fi
     done
 done
 [ ${#sides[@]} -gt 0 ] || fail "no side to print with"
+# Debian 13's images take minutes when Odoo's dependencies are installed again: they are built
+# beside the rest, while Odoo's image makes the database and its own sides print
+late_pid=""
+if [ ${#late[@]} -gt 0 ]; then
+    (
+        trap - EXIT
+        debian13_base
+        for side in "${late[@]}"; do side_image debian13 "${side#*-}"; done
+    ) &
+    late_pid=$!
+fi
+# (${early[@]+...}: bash before 4.4 calls an empty array unbound under set -u)
+for side in ${early[@]+"${early[@]}"}; do side_image "${side%%-*}" "${side#*-}"; done
 
 # every side's program must be the bytes programs.sh checked
 expect() { # PROGRAM: the SHA-256 the program at /opt/wk/wkhtmltopdf must have
@@ -177,13 +201,16 @@ expect() { # PROGRAM: the SHA-256 the program at /opt/wk/wkhtmltopdf must have
     marqius) pf marqius sha256 ;;
     esac
 }
-for side in "${sides[@]}"; do
-    p=${side#*-}
-    got=$(docker run --rm --platform "$plat" --entrypoint sh "$P/$side:local" -c 'sha256sum "$(readlink -f /opt/wk/wkhtmltopdf)"' | cut -c1-64)
-    e=$(expect "$p")
-    [ "$got" = "$e" ] || fail "$side runs a program with SHA-256 $got, not the checked $e"
-done
-log "every side runs the checked program: ${sides[*]}"
+checked() { # SIDE...: each runs the program programs.sh checked
+    local side got e
+    for side in "$@"; do
+        got=$(docker run --rm --platform "$plat" --entrypoint sh "$P/$side:local" -c 'sha256sum "$(readlink -f /opt/wk/wkhtmltopdf)"' | cut -c1-64)
+        e=$(expect "${side#*-}")
+        [ "$got" = "$e" ] || fail "$side runs a program with SHA-256 $got, not the checked $e"
+    done
+    log "the checked program runs in: $*"
+}
+[ ${#early[@]} -eq 0 ] || checked "${early[@]}"
 
 # ---- the database
 docker network create "$net" > /dev/null
@@ -229,10 +256,19 @@ print_side() { # SIDE
     mv "$o/pdf/prints.json" "$o/prints.json" 2> /dev/null || true
     return $rc
 }
-for side in "${sides[@]}"; do
+for side in ${early[@]+"${early[@]}"}; do
     log "printing with $side"
     print_side "$side" || log "$side: the print script ended with an error"
 done
+if [ -n "$late_pid" ]; then
+    wait "$late_pid" || fail "Debian 13's images did not build"
+    late_pid=""
+    checked "${late[@]}"
+    for side in "${late[@]}"; do
+        log "printing with $side"
+        print_side "$side" || log "$side: the print script ended with an error"
+    done
+fi
 
 # ---- the judge (../judge.sh): pages, compare against the reference, pictures checked again, cell.json
 ref=ubuntu24-wkhtmltopdf
