@@ -91,9 +91,15 @@ chmod 777 "$out"
 
 # ---- Odoo's image, and what is in it
 log "Odoo $v on $arch: pulling odoo:$v, postgres:17 and debian:trixie"
-pull "odoo:$v"
-pull postgres:17
-pull debian:trixie
+pulls=()
+for i in "odoo:$v" postgres:17 debian:trixie; do
+    (
+        trap - EXIT
+        pull "$i"
+    ) &
+    pulls+=($!)
+done
+for i in "${pulls[@]}"; do wait "$i" || fail "an image could not be pulled"; done
 image=$(docker image inspect --format '{{index .RepoDigests 0}}' "odoo:$v")
 release=$(docker run --rm --platform "$plat" --entrypoint dpkg-query "$image" -W -f '${Version}' odoo)
 uid=$(docker run --rm --platform "$plat" --entrypoint id "$image" -u odoo)

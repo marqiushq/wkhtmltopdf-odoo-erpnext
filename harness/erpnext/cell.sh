@@ -41,6 +41,7 @@ pf() { jq -r --arg p "$1" --arg a "$arch" --arg k "$2" '.files[] | select(.progr
 sha() { sha256sum "$1" | cut -c1-64; }
 compose() { docker compose -p "$P" -f "$here/compose.yml" ${override:+-f "$override"} "$@"; }
 cleanup() {
+    if [ -n "${sides_pid:-}" ]; then kill "$sides_pid" > /dev/null 2>&1 || true; fi
     override="" BACKEND_IMAGE=${BACKEND_IMAGE:-none} ERP_IMAGE=${ERP_IMAGE:-none} compose down -v --remove-orphans > /dev/null 2>&1 || true
     if [ "${KEEP_IMAGES:-}" != 1 ]; then
         for i in $(docker images -q --filter "reference=$P/*"); do docker rmi -f "$i" > /dev/null 2>&1 || true; done
@@ -70,9 +71,15 @@ chmod 777 "$out"
 
 # ---- ERPNext's image, and what is in it
 log "ERPNext $v on $arch: pulling frappe/erpnext:$v, mariadb:11.8 and redis:6.2-alpine"
-pull "frappe/erpnext:$v"
-pull mariadb:11.8
-pull redis:6.2-alpine
+pulls=()
+for i in "frappe/erpnext:$v" mariadb:11.8 redis:6.2-alpine; do
+    (
+        trap - EXIT
+        pull "$i"
+    ) &
+    pulls+=($!)
+done
+for i in "${pulls[@]}"; do wait "$i" || fail "an image could not be pulled"; done
 image=$(docker image inspect --format '{{index .RepoDigests 0}}' "frappe/erpnext:$v")
 export ERP_IMAGE=$image
 system=$(docker run --rm --platform "$plat" --entrypoint sh "$image" -c '. /etc/os-release && echo "$VERSION_CODENAME"')
@@ -93,39 +100,48 @@ got=$(docker run --rm --platform "$plat" --entrypoint sha256sum "$image" /usr/lo
 log "the wkhtmltopdf in ERPNext's image is the one in $deb ($got)"
 
 # ---- the images, one per side: ERPNext's image with the program at /opt/wk/wkhtmltopdf and the
-# stand-in at /usr/local/bin/wkhtmltopdf, where the package puts wkhtmltopdf and pdfkit finds it
+# stand-in at /usr/local/bin/wkhtmltopdf, where the package puts wkhtmltopdf and pdfkit finds it.
+# They build while the site is made (below), and each is checked before it prints.
 sides=()
-for p in $programs; do
-    side=$system-$p
-    d=$work/$side
-    mkdir -p "$d"
-    cp "$harness/shim.sh" "$d/"
-    {
-        echo "FROM $image"
-        echo 'USER root'
+for p in $programs; do sides+=("$system-$p"); done
+side_images() {
+    local p side d e g
+    for p in $programs; do
+        side=$system-$p
+        d=$work/$side
+        mkdir -p "$d"
+        cp "$harness/shim.sh" "$d/"
+        {
+            echo "FROM $image"
+            echo 'USER root'
+            case $p in
+            wkhtmltopdf)
+                echo 'RUN mkdir -p /opt/wk && mv /usr/local/bin/wkhtmltopdf /usr/local/bin/wkhtmltoimage /opt/wk/' ;;
+            marqius)
+                cp -R "$progs/marqius" "$d/mq"
+                cp "$progs/marqius-wkhtmltopdf.sh" "$d/mq/"
+                echo 'COPY mq /tmp/mq'
+                echo "RUN dpkg -r wkhtmltox > /dev/null && MARQIUS_DOWNLOAD=file:///tmp/mq bash /tmp/mq/marqius-wkhtmltopdf.sh --version $mq --prefix /opt/wk && rm -rf /tmp/mq" ;;
+            esac
+            echo 'COPY shim.sh /usr/local/bin/wkhtmltopdf'
+            echo 'RUN chmod 755 /usr/local/bin/wkhtmltopdf'
+            echo 'USER frappe'
+        } > "$d/Dockerfile"
+        build "$side" "$d"
         case $p in
-        wkhtmltopdf)
-            echo 'RUN mkdir -p /opt/wk && mv /usr/local/bin/wkhtmltopdf /usr/local/bin/wkhtmltoimage /opt/wk/' ;;
-        marqius)
-            cp -R "$progs/marqius" "$d/mq"
-            cp "$progs/marqius-wkhtmltopdf.sh" "$d/mq/"
-            echo 'COPY mq /tmp/mq'
-            echo "RUN dpkg -r wkhtmltox > /dev/null && MARQIUS_DOWNLOAD=file:///tmp/mq bash /tmp/mq/marqius-wkhtmltopdf.sh --version $mq --prefix /opt/wk && rm -rf /tmp/mq" ;;
+        wkhtmltopdf) e=$want ;;
+        marqius) e=$(pf marqius sha256) ;;
         esac
-        echo 'COPY shim.sh /usr/local/bin/wkhtmltopdf'
-        echo 'RUN chmod 755 /usr/local/bin/wkhtmltopdf'
-        echo 'USER frappe'
-    } > "$d/Dockerfile"
-    build "$side" "$d"
-    case $p in
-    wkhtmltopdf) e=$want ;;
-    marqius) e=$(pf marqius sha256) ;;
-    esac
-    g=$(docker run --rm --platform "$plat" --entrypoint sh "$P/$side:local" -c 'sha256sum "$(readlink -f /opt/wk/wkhtmltopdf)"' | cut -c1-64)
-    [ "$g" = "$e" ] || fail "$side runs a program with SHA-256 $g, not the checked $e"
-    sides+=("$side")
-done
-log "every side runs the checked program: ${sides[*]}"
+        g=$(docker run --rm --platform "$plat" --entrypoint sh "$P/$side:local" -c 'sha256sum "$(readlink -f /opt/wk/wkhtmltopdf)"' | cut -c1-64)
+        [ "$g" = "$e" ] || fail "$side runs a program with SHA-256 $g, not the checked $e"
+    done
+    log "every side runs the checked program: ${sides[*]}"
+}
+(
+    trap - EXIT
+    side_images
+) &
+sides_pid=$!
 
 # ---- the site, as frappe_docker's quick start makes it, and the documents
 override=""
@@ -145,6 +161,8 @@ jq -n --slurpfile c "$here/cases.json" --slurpfile s "$out/setup.json.seed" \
 log "site and documents made in $(($(date +%s) - t0)) s: $(cat "$out/setup.json.seed")"
 
 # ---- each side prints every case: the backend started with its image, on the same site
+wait "$sides_pid" || fail "the sides' images did not build"
+sides_pid=""
 for side in "${sides[@]}"; do
     log "printing with $side"
     o=$out/$side
